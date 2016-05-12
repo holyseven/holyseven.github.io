@@ -1,0 +1,597 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="caffe, tutorial," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="看blob.hpp和layer.hpp等。
+
+1234567891011121314151617181920212223//layer.hpp  /**   * @brief Implements common layer setup functionality.   *   * @param bottom the preshaped input blobs   * @param top   *">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Caffe Code Reading - blob and layer">
+<meta property="og:url" content="http://yoursite.com/2016/05/13/2016-04-26-caffe-code-reading-layer/index.html">
+<meta property="og:site_name" content="holyseven's blog">
+<meta property="og:description" content="看blob.hpp和layer.hpp等。
+
+1234567891011121314151617181920212223//layer.hpp  /**   * @brief Implements common layer setup functionality.   *   * @param bottom the preshaped input blobs   * @param top   *">
+<meta property="og:updated_time" content="2016-05-12T23:39:25.544Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Caffe Code Reading - blob and layer">
+<meta name="twitter:description" content="看blob.hpp和layer.hpp等。
+
+1234567891011121314151617181920212223//layer.hpp  /**   * @brief Implements common layer setup functionality.   *   * @param bottom the preshaped input blobs   * @param top   *">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> Caffe Code Reading - blob and layer | holyseven's blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">holyseven's blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Caffe Code Reading - blob and layer
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-05-13T01:39:25+02:00" content="2016-05-13">
+              2016-05-13
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/13/2016-04-26-caffe-code-reading-layer/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/13/2016-04-26-caffe-code-reading-layer/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>看blob.hpp和layer.hpp等。</p>
+<hr>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//layer.hpp</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span><br><span class="line">   * @brief Implements common layer setup functionality.</span><br><span class="line">   *</span><br><span class="line">   * @param bottom the preshaped input blobs</span><br><span class="line">   * @param top</span><br><span class="line">   *     the allocated but unshaped output blobs, to be shaped by Reshape</span><br><span class="line">   *</span><br><span class="line">   * Checks that the number of bottom and top blobs is correct.</span><br><span class="line">   * Calls LayerSetUp to do special layer setup for individual layer types,</span><br><span class="line">   * followed by Reshape to set up sizes of top blobs and internal buffers.</span><br><span class="line">   * Sets up the loss weight multiplier blobs for any non-zero loss weights.</span><br><span class="line">   * This method may not be overridden.</span><br><span class="line">   */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">SetUp</span><span class="params">(<span class="keyword">const</span> <span class="built_in">vector</span>&lt;Blob&lt;Dtype&gt;*&gt;&amp; bottom,</span><br><span class="line">      <span class="keyword">const</span> <span class="built_in">vector</span>&lt;Blob&lt;Dtype&gt;*&gt;&amp; top)</span> </span>&#123;</span><br><span class="line">    InitMutex();<span class="comment">//在layer.cpp里实现了</span></span><br><span class="line">    CheckBlobCounts(bottom, top);<span class="comment">//里面有函数没有实现，&#123;ExactNum,Min,Max&#125;&#123;Bottom,Top&#125;Blobs()</span></span><br><span class="line">    LayerSetUp(bottom, top);<span class="comment">//这个感觉就完全是要自己实现了</span></span><br><span class="line">    Reshape(bottom, top);<span class="comment">//同上</span></span><br><span class="line">    SetLossWeights(top);<span class="comment">//好像不用自己实现了</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//base_conv_layer.hpp</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Abstract base class that factors out the BLAS code common to ConvolutionLayer and DeconvolutionLayer.</span></span><br><span class="line"><span class="comment">// 意思是说这是convnet和deconvnet中相同的blas代码？</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> Dtype&gt;</span><br><span class="line"><span class="keyword">class</span> BaseConvolutionLayer : <span class="keyword">public</span> Layer&lt;Dtype&gt; &#123;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">virtual</span> <span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">MinBottomBlobs</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; return <span class="number">1</span>; &#125;</span><br><span class="line">  <span class="function"><span class="keyword">virtual</span> <span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">MinTopBlobs</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; return <span class="number">1</span>; &#125;</span><br><span class="line">  <span class="function"><span class="keyword">virtual</span> <span class="keyword">inline</span> <span class="keyword">bool</span> <span class="title">EqualNumBottomTopBlobs</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; return <span class="literal">true</span>; &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line">  <span class="comment">/// @brief The spatial dimensions of a filter kernel.</span></span><br><span class="line">  Blob&lt;<span class="keyword">int</span>&gt; kernel_shape_;</span><br><span class="line">  <span class="comment">/// @brief The spatial dimensions of the stride.</span></span><br><span class="line">  Blob&lt;<span class="keyword">int</span>&gt; stride_;</span><br><span class="line">  <span class="comment">/// @brief The spatial dimensions of the padding.</span></span><br><span class="line">  Blob&lt;<span class="keyword">int</span>&gt; pad_;</span><br><span class="line">  <span class="comment">/// @brief The spatial dimensions of the dilation.</span></span><br><span class="line">  Blob&lt;<span class="keyword">int</span>&gt; dilation_;</span><br><span class="line">  <span class="comment">/// @brief The spatial dimensions of the convolution input.</span></span><br><span class="line">  Blob&lt;<span class="keyword">int</span>&gt; conv_input_shape_;</span><br><span class="line">  <span class="comment">/// @brief The spatial dimensions of the col_buffer.</span></span><br><span class="line">  <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; col_buffer_shape_;</span><br><span class="line">  <span class="comment">/// @brief The spatial dimensions of the output.</span></span><br><span class="line">  <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; output_shape_;</span><br><span class="line">  <span class="keyword">const</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;* bottom_shape_;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">int</span> num_spatial_axes_;</span><br><span class="line">  <span class="keyword">int</span> bottom_dim_;</span><br><span class="line">  <span class="keyword">int</span> top_dim_;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">int</span> channel_axis_;<span class="comment">//default: 1， 就是那个设置为“axis”的值，应该是从0开始。在它之前的</span></span><br><span class="line">                    <span class="comment">//layer被当做independent，在它之后的layer被当做spatial，要进行</span></span><br><span class="line">                    <span class="comment">//卷积的。见caffe.proto</span></span><br><span class="line">  <span class="keyword">int</span> num_;</span><br><span class="line">  <span class="keyword">int</span> channels_;</span><br><span class="line">  <span class="keyword">int</span> group_;</span><br><span class="line">  <span class="keyword">int</span> out_spatial_dim_;</span><br><span class="line">  <span class="keyword">int</span> weight_offset_;</span><br><span class="line">  <span class="keyword">int</span> num_output_;</span><br><span class="line">  <span class="keyword">bool</span> bias_term_;</span><br><span class="line">  <span class="keyword">bool</span> is_1x1_;</span><br><span class="line">  <span class="keyword">bool</span> force_nd_im2col_;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// base_conv_layer.cpp</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> Dtype&gt;</span><br><span class="line"><span class="keyword">void</span> BaseConvolutionLayer&lt;Dtype&gt;::LayerSetUp(<span class="keyword">const</span> <span class="built_in">vector</span>&lt;Blob&lt;Dtype&gt;*&gt;&amp; bottom,</span><br><span class="line">      <span class="keyword">const</span> <span class="built_in">vector</span>&lt;Blob&lt;Dtype&gt;*&gt;&amp; top) &#123;</span><br><span class="line">   <span class="comment">// 以3d-net为例说明。BxFxCxHxW。或者Bx1xFCxHxW。batch_size, frames, channels。</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Configure the kernel size, padding, stride, and inputs.</span></span><br><span class="line">  ConvolutionParameter conv_param = <span class="keyword">this</span>-&gt;layer_param_.convolution_param();</span><br><span class="line">  force_nd_im2col_ = conv_param.force_nd_im2col();</span><br><span class="line">  <span class="comment">//default: 1</span></span><br><span class="line">  channel_axis_ = bottom[<span class="number">0</span>]-&gt;CanonicalAxisIndex(conv_param.axis());</span><br><span class="line">  <span class="keyword">const</span> <span class="keyword">int</span> first_spatial_axis = channel_axis_ + <span class="number">1</span>;<span class="comment">//2</span></span><br><span class="line">  <span class="keyword">const</span> <span class="keyword">int</span> num_axes = bottom[<span class="number">0</span>]-&gt;num_axes();<span class="comment">//5</span></span><br><span class="line">  num_spatial_axes_ = num_axes - first_spatial_axis;<span class="comment">//5-2=3</span></span><br><span class="line">  CHECK_GE(num_spatial_axes_, <span class="number">0</span>);</span><br><span class="line">  <span class="comment">// one value in the vector: 4, not used</span></span><br><span class="line">  <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; bottom_dim_blob_shape(<span class="number">1</span>, num_spatial_axes_ + <span class="number">1</span>);</span><br><span class="line">  <span class="comment">//one value: max(3,1)=3</span></span><br><span class="line">  <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; spatial_dim_blob_shape(<span class="number">1</span>, <span class="built_in">std</span>::max(num_spatial_axes_, <span class="number">1</span>));</span><br><span class="line">  <span class="comment">// Setup filter kernel dimensions (kernel_shape_).</span></span><br><span class="line">  kernel_shape_.Reshape(spatial_dim_blob_shape);</span><br><span class="line">  <span class="keyword">int</span>* kernel_shape_data = kernel_shape_.mutable_cpu_data();</span><br><span class="line">  <span class="keyword">if</span> (conv_param.has_kernel_h() || conv_param.has_kernel_w()) &#123; <span class="comment">// not this case</span></span><br><span class="line">    CHECK_EQ(num_spatial_axes_, <span class="number">2</span>)</span><br><span class="line">        &lt;&lt; <span class="string">"kernel_h &amp; kernel_w can only be used for 2D convolution."</span>;</span><br><span class="line">    CHECK_EQ(<span class="number">0</span>, conv_param.kernel_size_size())</span><br><span class="line">        &lt;&lt; <span class="string">"Either kernel_size or kernel_h/w should be specified; not both."</span>;</span><br><span class="line">    kernel_shape_data[<span class="number">0</span>] = conv_param.kernel_h();</span><br><span class="line">    kernel_shape_data[<span class="number">1</span>] = conv_param.kernel_w();</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">     <span class="comment">// repeated times of kernel_size, 3</span></span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">int</span> num_kernel_dims = conv_param.kernel_size_size();</span><br><span class="line">    <span class="comment">// one kernel_size represents all</span></span><br><span class="line">    <span class="comment">// or repeated times of kernel_size must equal num_spatial_axes</span></span><br><span class="line">    CHECK(num_kernel_dims == <span class="number">1</span> || num_kernel_dims == num_spatial_axes_)</span><br><span class="line">        &lt;&lt; <span class="string">"kernel_size must be specified once, or once per spatial dimension "</span></span><br><span class="line">        &lt;&lt; <span class="string">"(kernel_size specified "</span> &lt;&lt; num_kernel_dims &lt;&lt; <span class="string">" times; "</span></span><br><span class="line">        &lt;&lt; num_spatial_axes_ &lt;&lt; <span class="string">" spatial dims)."</span>;</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; num_spatial_axes_; ++i) &#123;</span><br><span class="line">        kernel_shape_data[i] =</span><br><span class="line">            conv_param.kernel_size((num_kernel_dims == <span class="number">1</span>) ? <span class="number">0</span> : i);</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; num_spatial_axes_; ++i) &#123;</span><br><span class="line">    CHECK_GT(kernel_shape_data[i], <span class="number">0</span>) &lt;&lt; <span class="string">"Filter dimensions must be nonzero."</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// Setup stride dimensions (stride_).</span></span><br><span class="line">  <span class="comment">// Similar as filter kernel dimensions</span></span><br><span class="line">  stride_.Reshape(spatial_dim_blob_shape);</span><br><span class="line">  <span class="keyword">int</span>* stride_data = stride_.mutable_cpu_data();</span><br><span class="line">  <span class="keyword">if</span> (conv_param.has_stride_h() || conv_param.has_stride_w()) &#123;</span><br><span class="line">    CHECK_EQ(num_spatial_axes_, <span class="number">2</span>)</span><br><span class="line">        &lt;&lt; <span class="string">"stride_h &amp; stride_w can only be used for 2D convolution."</span>;</span><br><span class="line">    CHECK_EQ(<span class="number">0</span>, conv_param.stride_size())</span><br><span class="line">        &lt;&lt; <span class="string">"Either stride or stride_h/w should be specified; not both."</span>;</span><br><span class="line">    stride_data[<span class="number">0</span>] = conv_param.stride_h();</span><br><span class="line">    stride_data[<span class="number">1</span>] = conv_param.stride_w();</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">int</span> num_stride_dims = conv_param.stride_size();</span><br><span class="line">    CHECK(num_stride_dims == <span class="number">0</span> || num_stride_dims == <span class="number">1</span> ||</span><br><span class="line">          num_stride_dims == num_spatial_axes_)</span><br><span class="line">        &lt;&lt; <span class="string">"stride must be specified once, or once per spatial dimension "</span></span><br><span class="line">        &lt;&lt; <span class="string">"(stride specified "</span> &lt;&lt; num_stride_dims &lt;&lt; <span class="string">" times; "</span></span><br><span class="line">        &lt;&lt; num_spatial_axes_ &lt;&lt; <span class="string">" spatial dims)."</span>;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">int</span> kDefaultStride = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; num_spatial_axes_; ++i) &#123;</span><br><span class="line">      stride_data[i] = (num_stride_dims == <span class="number">0</span>) ? kDefaultStride :</span><br><span class="line">          conv_param.stride((num_stride_dims == <span class="number">1</span>) ? <span class="number">0</span> : i);</span><br><span class="line">      CHECK_GT(stride_data[i], <span class="number">0</span>) &lt;&lt; <span class="string">"Stride dimensions must be nonzero."</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// Setup pad dimensions (pad_).</span></span><br><span class="line">  pad_.Reshape(spatial_dim_blob_shape);</span><br><span class="line">  <span class="keyword">int</span>* pad_data = pad_.mutable_cpu_data();</span><br><span class="line">  <span class="keyword">if</span> (conv_param.has_pad_h() || conv_param.has_pad_w()) &#123;</span><br><span class="line">    CHECK_EQ(num_spatial_axes_, <span class="number">2</span>)</span><br><span class="line">        &lt;&lt; <span class="string">"pad_h &amp; pad_w can only be used for 2D convolution."</span>;</span><br><span class="line">    CHECK_EQ(<span class="number">0</span>, conv_param.pad_size())</span><br><span class="line">        &lt;&lt; <span class="string">"Either pad or pad_h/w should be specified; not both."</span>;</span><br><span class="line">    pad_data[<span class="number">0</span>] = conv_param.pad_h();</span><br><span class="line">    pad_data[<span class="number">1</span>] = conv_param.pad_w();</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">int</span> num_pad_dims = conv_param.pad_size();</span><br><span class="line">    CHECK(num_pad_dims == <span class="number">0</span> || num_pad_dims == <span class="number">1</span> ||</span><br><span class="line">          num_pad_dims == num_spatial_axes_)</span><br><span class="line">        &lt;&lt; <span class="string">"pad must be specified once, or once per spatial dimension "</span></span><br><span class="line">        &lt;&lt; <span class="string">"(pad specified "</span> &lt;&lt; num_pad_dims &lt;&lt; <span class="string">" times; "</span></span><br><span class="line">        &lt;&lt; num_spatial_axes_ &lt;&lt; <span class="string">" spatial dims)."</span>;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">int</span> kDefaultPad = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; num_spatial_axes_; ++i) &#123;</span><br><span class="line">      pad_data[i] = (num_pad_dims == <span class="number">0</span>) ? kDefaultPad :</span><br><span class="line">          conv_param.pad((num_pad_dims == <span class="number">1</span>) ? <span class="number">0</span> : i);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// Setup dilation dimensions (dilation_).</span></span><br><span class="line">  dilation_.Reshape(spatial_dim_blob_shape);</span><br><span class="line">  <span class="keyword">int</span>* dilation_data = dilation_.mutable_cpu_data();</span><br><span class="line">  <span class="keyword">const</span> <span class="keyword">int</span> num_dilation_dims = conv_param.dilation_size();</span><br><span class="line">  CHECK(num_dilation_dims == <span class="number">0</span> || num_dilation_dims == <span class="number">1</span> ||</span><br><span class="line">        num_dilation_dims == num_spatial_axes_)</span><br><span class="line">      &lt;&lt; <span class="string">"dilation must be specified once, or once per spatial dimension "</span></span><br><span class="line">      &lt;&lt; <span class="string">"(dilation specified "</span> &lt;&lt; num_dilation_dims &lt;&lt; <span class="string">" times; "</span></span><br><span class="line">      &lt;&lt; num_spatial_axes_ &lt;&lt; <span class="string">" spatial dims)."</span>;</span><br><span class="line">  <span class="keyword">const</span> <span class="keyword">int</span> kDefaultDilation = <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; num_spatial_axes_; ++i) &#123;</span><br><span class="line">    dilation_data[i] = (num_dilation_dims == <span class="number">0</span>) ? kDefaultDilation :</span><br><span class="line">                       conv_param.dilation((num_dilation_dims == <span class="number">1</span>) ? <span class="number">0</span> : i);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// Special case: im2col is the identity for 1x1 convolution with stride 1</span></span><br><span class="line">  <span class="comment">// and no padding, so flag for skipping the buffer and transformation.</span></span><br><span class="line">  is_1x1_ = <span class="literal">true</span>;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; num_spatial_axes_; ++i) &#123;</span><br><span class="line">    is_1x1_ &amp;=</span><br><span class="line">        kernel_shape_data[i] == <span class="number">1</span> &amp;&amp; stride_data[i] == <span class="number">1</span> &amp;&amp; pad_data[i] == <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> (!is_1x1_) &#123; <span class="keyword">break</span>; &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// Configure output channels and groups.</span></span><br><span class="line">  <span class="comment">// channel_axis_ default = 1, channels_ = ?</span></span><br><span class="line">  channels_ = bottom[<span class="number">0</span>]-&gt;shape(channel_axis_);</span><br><span class="line">  <span class="comment">// defined in train_test.prototxt</span></span><br><span class="line">  num_output_ = <span class="keyword">this</span>-&gt;layer_param_.convolution_param().num_output();</span><br><span class="line">  CHECK_GT(num_output_, <span class="number">0</span>);</span><br><span class="line">  <span class="comment">// default = 1, but what is it?</span></span><br><span class="line">  group_ = <span class="keyword">this</span>-&gt;layer_param_.convolution_param().group();</span><br><span class="line">  CHECK_EQ(channels_ % group_, <span class="number">0</span>);</span><br><span class="line">  CHECK_EQ(num_output_ % group_, <span class="number">0</span>)</span><br><span class="line">      &lt;&lt; <span class="string">"Number of output should be multiples of group."</span>;</span><br><span class="line">  <span class="keyword">if</span> (reverse_dimensions()) &#123; <span class="comment">// deconv:true, conv:false.</span></span><br><span class="line">    conv_out_channels_ = channels_;</span><br><span class="line">    conv_in_channels_ = num_output_;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    conv_out_channels_ = num_output_;</span><br><span class="line">    conv_in_channels_ = channels_;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// Handle the parameters: weights and biases.</span></span><br><span class="line">  <span class="comment">// - blobs_[0] holds the filter weights</span></span><br><span class="line">  <span class="comment">// - blobs_[1] holds the biases (optional)</span></span><br><span class="line">  <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; weight_shape(<span class="number">2</span>);</span><br><span class="line">  weight_shape[<span class="number">0</span>] = conv_out_channels_;</span><br><span class="line">  weight_shape[<span class="number">1</span>] = conv_in_channels_ / group_;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; num_spatial_axes_; ++i) &#123;</span><br><span class="line">    weight_shape.push_back(kernel_shape_data[i]);</span><br><span class="line">  &#125;</span><br><span class="line">  bias_term_ = <span class="keyword">this</span>-&gt;layer_param_.convolution_param().bias_term();</span><br><span class="line">  <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; bias_shape(bias_term_, num_output_);</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">this</span>-&gt;blobs_.size() &gt; <span class="number">0</span>) &#123;</span><br><span class="line">    CHECK_EQ(<span class="number">1</span> + bias_term_, <span class="keyword">this</span>-&gt;blobs_.size())</span><br><span class="line">        &lt;&lt; <span class="string">"Incorrect number of weight blobs."</span>;</span><br><span class="line">    <span class="keyword">if</span> (weight_shape != <span class="keyword">this</span>-&gt;blobs_[<span class="number">0</span>]-&gt;shape()) &#123;</span><br><span class="line">      Blob&lt;Dtype&gt; weight_shaped_blob(weight_shape);</span><br><span class="line">      LOG(FATAL) &lt;&lt; <span class="string">"Incorrect weight shape: expected shape "</span></span><br><span class="line">          &lt;&lt; weight_shaped_blob.shape_string() &lt;&lt; <span class="string">"; instead, shape was "</span></span><br><span class="line">          &lt;&lt; <span class="keyword">this</span>-&gt;blobs_[<span class="number">0</span>]-&gt;shape_string();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (bias_term_ &amp;&amp; bias_shape != <span class="keyword">this</span>-&gt;blobs_[<span class="number">1</span>]-&gt;shape()) &#123;</span><br><span class="line">      Blob&lt;Dtype&gt; bias_shaped_blob(bias_shape);</span><br><span class="line">      LOG(FATAL) &lt;&lt; <span class="string">"Incorrect bias shape: expected shape "</span></span><br><span class="line">          &lt;&lt; bias_shaped_blob.shape_string() &lt;&lt; <span class="string">"; instead, shape was "</span></span><br><span class="line">          &lt;&lt; <span class="keyword">this</span>-&gt;blobs_[<span class="number">1</span>]-&gt;shape_string();</span><br><span class="line">    &#125;</span><br><span class="line">    LOG(INFO) &lt;&lt; <span class="string">"Skipping parameter initialization"</span>;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (bias_term_) &#123;</span><br><span class="line">      <span class="keyword">this</span>-&gt;blobs_.resize(<span class="number">2</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">this</span>-&gt;blobs_.resize(<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// Initialize and fill the weights:</span></span><br><span class="line">    <span class="comment">// output channels x input channels per-group x kernel height x kernel width</span></span><br><span class="line">    <span class="keyword">this</span>-&gt;blobs_[<span class="number">0</span>].reset(new Blob&lt;Dtype&gt;(weight_shape));</span><br><span class="line">    <span class="built_in">shared_ptr</span>&lt;Filler&lt;Dtype&gt; &gt; weight_filler(GetFiller&lt;Dtype&gt;(</span><br><span class="line">        this-&gt;layer_param_.convolution_param().weight_filler()));</span><br><span class="line">    weight_filler-&gt;Fill(<span class="keyword">this</span>-&gt;blobs_[<span class="number">0</span>].get());</span><br><span class="line">    <span class="comment">// If necessary, initialize and fill the biases.</span></span><br><span class="line">    <span class="keyword">if</span> (bias_term_) &#123;</span><br><span class="line">      <span class="keyword">this</span>-&gt;blobs_[<span class="number">1</span>].reset(new Blob&lt;Dtype&gt;(bias_shape));</span><br><span class="line">      <span class="built_in">shared_ptr</span>&lt;Filler&lt;Dtype&gt; &gt; bias_filler(GetFiller&lt;Dtype&gt;(</span><br><span class="line">          this-&gt;layer_param_.convolution_param().bias_filler()));</span><br><span class="line">      bias_filler-&gt;Fill(<span class="keyword">this</span>-&gt;blobs_[<span class="number">1</span>].get());</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  kernel_dim_ = <span class="keyword">this</span>-&gt;blobs_[<span class="number">0</span>]-&gt;count(<span class="number">1</span>);</span><br><span class="line">  weight_offset_ = conv_out_channels_ * kernel_dim_ / group_;</span><br><span class="line">  <span class="comment">// Propagate gradients to the parameters (as directed by backward pass).</span></span><br><span class="line">  <span class="keyword">this</span>-&gt;param_propagate_down_.resize(<span class="keyword">this</span>-&gt;blobs_.size(), <span class="literal">true</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>唉，代码解释就先写到这吧，因为我发现了另外一个有趣的事情：</p>
+<p>在这个版本中<a href="https://github.com/BVLC/caffe/tree/87eff5ff04c32c7fc35a7e0f8ee36a1a72278c1e" target="_blank" rel="external">87eff5f</a>，有nd pooling的代码，而在最新版本中(avril 25, 2016)，有nd conv的代码，于是，我把[87eff5f]的pooling代码粘贴过来了，改了caffe.proto，还改了一些set_pad=&gt;add_pad，都是根据编译错误来改的。然后就能运行了。。。。。只不过，还是发现两个GPU有时并不同时工作。我降低了batch_size，发现当GPU内存较小时（3G以下或者4G以下），两个GPU就能同时达到99%的工作效率，速度大概是10s 20次迭代。alexnet大概是4.8s 20次。算是不错的了。另外，cudnn并不支持nd conv，但是好像支持nd pooling，不是很明白，所以engine要选caffe。pooling的代码我改过，直接让它用caffe engine的，不然编译还是运行的时候就会报错。</p>
+<p>真是奇怪啊，caffe之前就把nd pooling写了（2015年5月）；但是好像11月的时候还是之前经历了一次结构上的大调整，把layer的hpp单独提出来了，之前conv和pool等都是在vision_layer.hpp里定义的。结果调整之后，pooling就变成很早之前的版本了。</p>
+<p>接下来就是要看怎么把数据传进去。之前一直用的dummydatalayer。</p>
+<p>SoftmaxWithLoss是沿着一个axis来进行softmax的，如果是semantic segmentation，可以把label的dimensions设置为227<em>227，然后fc8最后的输出也是227</em>227。考虑一下是否可行。</p>
+<p>要输入类似video的连续图片，我觉得重写tools/convert_imageset就好了吧。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/caffe-tutorial/" rel="tag">#caffe, tutorial</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/05/13/2016-04-25-caffe-code-reading-translating-official-tutorial/" rel="next" title="Caffe Code Reading - translating official tutorial">
+                <i class="fa fa-chevron-left"></i> Caffe Code Reading - translating official tutorial
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/05/13/2016-04-27-caffe-code-convert-imageset/" rel="prev" title="Caffe Code Reading - Convert Image Set">
+                Caffe Code Reading - Convert Image Set <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/05/13/2016-04-26-caffe-code-reading-layer/"
+           data-title="Caffe Code Reading - blob and layer" data-url="http://yoursite.com/2016/05/13/2016-04-26-caffe-code-reading-layer/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="holyseven" />
+          <p class="site-author-name" itemprop="name">holyseven</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">8</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">holyseven</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"holyseven"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>

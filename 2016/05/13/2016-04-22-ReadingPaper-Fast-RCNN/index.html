@@ -84,28 +84,37 @@
 
 
 
-<meta name="description" content="KeyWords: 3d convnet, action recognition.
+<meta name="description" content="KeyWords: Region proposal, SPP, Object Detection
 
-Paper Author: Du Tran, Lubomir Bourdev, Rob Fergus, Lorenzo Torresani, Manohar Paluri
-Research Institu: Facebook AI Reasearch, Dartmouth College
-Database: UC">
+Paper Author: Ross Girshick Research Institu: Microsoft Reasearch
+Database:  
+GPU &amp;amp; timing: one K40 GPU
+Paper Link: cvpr15
+
+Abstract&amp;amp;Introduct">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Learning Spatiotemporal Features with 3D Convolutional Networks#PaperReading#">
-<meta property="og:url" content="http://yoursite.com/2016/05/13/2016-05-10-ReadingPaper-C3D/index.html">
+<meta property="og:title" content="Fast R-CNN#PaperReading#">
+<meta property="og:url" content="http://yoursite.com/2016/05/13/2016-04-22-ReadingPaper-Fast-RCNN/index.html">
 <meta property="og:site_name" content="holyseven's blog">
-<meta property="og:description" content="KeyWords: 3d convnet, action recognition.
+<meta property="og:description" content="KeyWords: Region proposal, SPP, Object Detection
 
-Paper Author: Du Tran, Lubomir Bourdev, Rob Fergus, Lorenzo Torresani, Manohar Paluri
-Research Institu: Facebook AI Reasearch, Dartmouth College
-Database: UC">
-<meta property="og:updated_time" content="2016-05-12T23:40:27.376Z">
+Paper Author: Ross Girshick Research Institu: Microsoft Reasearch
+Database:  
+GPU &amp;amp; timing: one K40 GPU
+Paper Link: cvpr15
+
+Abstract&amp;amp;Introduct">
+<meta property="og:updated_time" content="2016-05-12T23:38:35.064Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Learning Spatiotemporal Features with 3D Convolutional Networks#PaperReading#">
-<meta name="twitter:description" content="KeyWords: 3d convnet, action recognition.
+<meta name="twitter:title" content="Fast R-CNN#PaperReading#">
+<meta name="twitter:description" content="KeyWords: Region proposal, SPP, Object Detection
 
-Paper Author: Du Tran, Lubomir Bourdev, Rob Fergus, Lorenzo Torresani, Manohar Paluri
-Research Institu: Facebook AI Reasearch, Dartmouth College
-Database: UC">
+Paper Author: Ross Girshick Research Institu: Microsoft Reasearch
+Database:  
+GPU &amp;amp; timing: one K40 GPU
+Paper Link: cvpr15
+
+Abstract&amp;amp;Introduct">
 
 
 
@@ -123,7 +132,7 @@ Database: UC">
   };
 </script>
 
-  <title> Learning Spatiotemporal Features with 3D Convolutional Networks#PaperReading# | holyseven's blog </title>
+  <title> Fast R-CNN#PaperReading# | holyseven's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -243,7 +252,7 @@ Database: UC">
             
             
               
-                Learning Spatiotemporal Features with 3D Convolutional Networks#PaperReading#
+                Fast R-CNN#PaperReading#
               
             
           </h1>
@@ -255,7 +264,7 @@ Database: UC">
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-05-13T01:40:27+02:00" content="2016-05-13">
+            <time itemprop="dateCreated" datetime="2016-05-13T01:38:35+02:00" content="2016-05-13">
               2016-05-13
             </time>
           </span>
@@ -266,8 +275,8 @@ Database: UC">
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/05/13/2016-05-10-ReadingPaper-C3D/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/13/2016-05-10-ReadingPaper-C3D/" itemprop="commentsCount"></span>
+                <a href="/2016/05/13/2016-04-22-ReadingPaper-Fast-RCNN/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/13/2016-04-22-ReadingPaper-Fast-RCNN/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -290,24 +299,63 @@ Database: UC">
       
 
       
-        <p><strong>KeyWords</strong>: 3d convnet, action recognition.</p>
+        <p><strong>KeyWords</strong>: Region proposal, SPP, Object Detection</p>
 <hr>
-<p><strong>Paper Author</strong>: Du Tran, Lubomir Bourdev, Rob Fergus, Lorenzo Torresani, Manohar Paluri</p>
-<p><strong>Research Institu</strong>: Facebook AI Reasearch, Dartmouth College</p>
-<p><strong>Database</strong>: UCF101, Sport1m, I380K(internal database)</p>
-<p><strong>GPU &amp; timing</strong>: </p>
-<p><strong>Paper Link</strong>: <a href="http://www.cv-foundation.org/openaccess/content_iccv_2015/html/Tran_Learning_Spatiotemporal_Features_ICCV_2015_paper.html" target="_blank" rel="external">iccv15</a></p>
+<p><strong>Paper Author</strong>: Ross Girshick <strong>Research Institu</strong>: Microsoft Reasearch</p>
+<p><strong>Database</strong>:  </p>
+<p><strong>GPU &amp; timing</strong>: one K40 GPU</p>
+<p><strong>Paper Link</strong>: <a href="http://www.cv-foundation.org/openaccess/content_iccv_2015/html/Girshick_Fast_R-CNN_ICCV_2015_paper.html" target="_blank" rel="external">cvpr15</a></p>
 <hr>
-<h1 id="3-3D-ConvNets"><a href="#3-3D-ConvNets" class="headerlink" title="3. 3D ConvNets"></a><strong>3. 3D ConvNets</strong></h1><p>又是从第三章开始。3D convnet就不叙述了。文中把视频截断成16-frame的clips，所以input就变成了3x16x128x171。然后在随机crop成3x16x112x112的图片，可以增加数据量，但是这种数据量的增加我觉得需要打折扣，并不能完全乘以16x59这样计算。我觉得这里是讲的train from scratch on UCF101，所以用的网络比较小，5个卷积层，3个fc，2048，2048，101。batch size = 30, lr = 0.003， 4 epochs之后除以10， 总共16个epochs。</p>
-<p>然后讨论了depth应该取多少，最后好像是3最好。但是train from scratch最多到达45%的准确率（clip-based）。</p>
-<p><strong>问题1</strong><br>但是可以从图中看到，在epoch 3,4的时候，accuracy是降低的，然后过了4，又升上去了，好奇怪，正常吗?</p>
-<p>然后就开始正常的训练了，实际上作者是用的他们自己的数据库I380K训练的，这个好像是用了8个convnet，5个pooling，fc4096，4096，101。然后在这个数据库的基础上再fine-tuning。好像引用中[29]的准确律在sport1m上比C3D还要高，文中说120-frame的clips不能直接跟文中的16-frame的准确率比较。</p>
-<p>文中的准确率的图表真让人看得眼花缭乱。 Table 2里面说的C3D(trained from scratch) 44.9, 60.0, 84.4, C3D(fine-tuned from I380K pre-trained model)在单个clip上的是46.1，单个video上的是61.1，单个video@5 is 85.2。但是再第4章里有又说，</p>
+<h1 id="Abstract-amp-Introduction"><a href="#Abstract-amp-Introduction" class="headerlink" title="Abstract&amp;Introduction"></a><strong>Abstract&amp;Introduction</strong></h1><p>用VGG16，训练速度比R-CNN快16倍，测试速度快213倍，并且在PASCAL VOC 2012上的mAP要高。和SPP比，3倍训练速度，10倍测试速度，更准确。</p>
+<p>文中说R-CNN的训练是分多个阶段的：</p>
+<ul>
+<li>fine-tuning ConvNet来提取特征</li>
+<li>SVM分类训练</li>
+<li>regressor对bounding box进行更准确的预测。</li>
+</ul>
+<p><strong>问题1</strong>：如果三个阶段是分离的，ConvNet是怎么训练的？ 原文如下，但是和什么比较呢？我看RCNN原文2.3中写得有点怪，pre-trained之后的CNN把最后一层fc去掉，换成21-way的classifier，然后fine-tuning。但是最后还是extract features (4096维的吧)，然后用SVM分类，我的理解是，fast RCNN中说的第一个阶段，就是fine-tuning CNN的阶段，然后把21-way的那层去掉，换成一个SVM。所以这样又要第二个阶段。作者的理解应该不会错的，毕竟两篇都是他写的。。。</p>
 <blockquote>
-<p>C3D with 3 nets boosts the accuracy to 85.2% with the dimension is increased to 12,288.</p>
+<p>using log loss</p>
 </blockquote>
-<p>In table 3, C3D(1 net) + SVM: 82.3, C3D(3 nets) + SVM: 85.2</p>
-<p>唉，导师说我这篇文章没有仔细看明白，感觉看明白了也做不出来啊。首先因为他用了自己的数据库。然后不知道如果从sport1m入手的准确率怎么样。反正现在用ucf101，准确率最多到37，38%左右。离作者说的45%还差一截，不过我觉得差的也只是其中的一些参数的调整了。但是这个45%，是建立在training data的准确率是接近100%的，这样难道不是overfitting吗？</p>
+<p><strong>20160503加</strong></p>
+<p>pre-train是按照image-level annotations来训练的，是个正常的分类网络。然后他再把最后一层换成了21-way的输出，然后再用voc的数据来fine-tuning这个cnn；最后再把前一层4096的特征提出来，用svm来分类。最后对bbox的回归也是要单独训练。</p>
+<hr>
+<p>SPP可以sharing computation。具体见SPPNet原文。SPP的缺点：</p>
+<blockquote>
+<ul>
+<li>和R-CNN一样，训练也是分离的 (multi-stage pipeline)</li>
+<li>提取的特征要写入到硬盘</li>
+<li>不能更新SPP层之前的卷积层</li>
+</ul>
+</blockquote>
+<p>所以，fast R-CNN的几个优点就是训练是single-stage using a multi-task loss，可以更新所有的网络层，不需要写入硬盘。</p>
+<hr>
+<h1 id="The-Rest"><a href="#The-Rest" class="headerlink" title="The Rest"></a><strong>The Rest</strong></h1><p>类似SPP，在所有conv layer之后，加上了一个ROI pooling layer。在图片中的ROI，会先在conv feature map上找到对应的ROI,大小hw，然后将hw大小的ROI推进到HW的grid里（VGG16中是7x7），所以有49个sub-windows，每个sub-windows的大小大约在h/H x w/W。最后的做pooling的是每一个sub-windows，输出的尺寸即是256×49（256是上一层的channels，有可能是512，忘了）。所以文章中说</p>
+<blockquote>
+<p>The ROI layer is simply the special-case of the spp layer used in SPPnets in which there is only one pyramid level.</p>
+</blockquote>
+<p>fast rcnn用的只有一层pyramid level。</p>
+<p>文章2.2中说</p>
+<blockquote>
+<p>when a pre-trained network initializes a fast r-cnn network, it undergoes three transformations.</p>
+<ul>
+<li>第一个是最后一层max pooling layer被替换成了ROI pooling layer。虽然这里没有参数，但是需要调整HW来使其与第一层fc compatible。</li>
+<li>第二个是最后一层的fc和softmax被替换成了自己要做的。</li>
+<li>第三个是输入变了。</li>
+</ul>
+</blockquote>
+<p>那</p>
+<p><strong>问题2</strong>：变化的第一个，VGG16中，有对应关系，直接这样拿过来fine-tuning，行么？</p>
+<p>在2.3中，作者解释了为什么SPP和RCNN都比较慢的原因：当每个training sample都是来自不同的图片时，bp通过spp的效率特别低，因为每个ROI可能会特别大，（spp每次都要计算来自不同的图片中的ROI，这样并没有发挥share的效果，所以特别慢）。而本文中，每个batch中的样本是hierarchically sampled，每N张图片中，sample R/N个ROI，例子N=2， R=128，这样比RCNN和SPP快64倍roughly。</p>
+<p>作者也提到，这样每个batch里的ROI都correlated，会影响收敛速度。但是实际上并没有这个问题，相反用的迭代次数反而比RCNN少。</p>
+<p>两个loss function，加起来。regressor用的不是L2，变了一些。cls还是softmax, log loss。</p>
+<p>bp through roi pooling layer。。。</p>
+<p>初始化参数，用来分类的fc和bbox的fc参数初始化为平均值为0，均方差为0.01和0.001的高斯分布，global lr=0.001，weights lr = 1, bias lr = 2。小数据库（voc07,12）时，30k iteration,然后将lr降为0.0001在训练10k次。大点的数据库，文中没看到。</p>
+<p>4.5中，作者认为浅层的的卷积层可以不fine-tuning，但是稍微深层一点的（9/13开始）还是需要，如果只从fc开始，mAP下降了5.5%。还有，</p>
+<blockquote>
+<p>In the smaller networks we find that conv1 is generic and task independent.</p>
+</blockquote>
+<p>这篇就先写到这吧。</p>
 
       
     </div>
@@ -338,16 +386,16 @@ Database: UC">
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/05/13/2016-04-29-reinstall-ubuntu/" rel="next" title="Reinstall Ubuntu 14.04 and Teamviewer, jekyll">
-                <i class="fa fa-chevron-left"></i> Reinstall Ubuntu 14.04 and Teamviewer, jekyll
+              <a href="/2016/05/13/2016-04-18-notes-of-problems-when-installing-opencv-and-caffe/" rel="next" title="Notes of problems when installing opencv and caffe">
+                <i class="fa fa-chevron-left"></i> Notes of problems when installing opencv and caffe
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/05/13/2016-05-03-ReadingPaper-FCN/" rel="prev" title="Fully Convolutional Networks#PaperReading#">
-                Fully Convolutional Networks#PaperReading# <i class="fa fa-chevron-right"></i>
+              <a href="/2016/05/13/2016-04-25-caffe-code-reading-translating-official-tutorial/" rel="prev" title="Caffe Code Reading - translating official tutorial">
+                Caffe Code Reading - translating official tutorial <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -374,8 +422,8 @@ Database: UC">
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/05/13/2016-05-10-ReadingPaper-C3D/"
-           data-title="Learning Spatiotemporal Features with 3D Convolutional Networks#PaperReading#" data-url="http://yoursite.com/2016/05/13/2016-05-10-ReadingPaper-C3D/">
+      <div class="ds-thread" data-thread-key="2016/05/13/2016-04-22-ReadingPaper-Fast-RCNN/"
+           data-title="Fast R-CNN#PaperReading#" data-url="http://yoursite.com/2016/05/13/2016-04-22-ReadingPaper-Fast-RCNN/">
       </div>
     
   </div>
@@ -459,7 +507,7 @@ Database: UC">
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#3-3D-ConvNets"><span class="nav-number">1.</span> <span class="nav-text">3. 3D ConvNets</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Abstract-amp-Introduction"><span class="nav-number">1.</span> <span class="nav-text">Abstract&Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#The-Rest"><span class="nav-number">2.</span> <span class="nav-text">The Rest</span></a></li></ol></div>
             
           </div>
         </section>
