@@ -98,7 +98,7 @@ Database: UC">
 Paper Author: Du Tran, Lubomir Bourdev, Rob Fergus, Lorenzo Torresani, Manohar Paluri
 Research Institu: Facebook AI Reasearch, Dartmouth College
 Database: UC">
-<meta property="og:updated_time" content="2016-05-13T08:33:55.360Z">
+<meta property="og:updated_time" content="2016-05-13T08:59:17.732Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Learning Spatiotemporal Features with 3D Convolutional Networks#PaperReading#">
 <meta name="twitter:description" content="KeyWords: 3d convnet, action recognition.
@@ -299,7 +299,7 @@ Database: UC">
 <p><strong>Paper Link</strong>: <a href="http://www.cv-foundation.org/openaccess/content_iccv_2015/html/Tran_Learning_Spatiotemporal_Features_ICCV_2015_paper.html" target="_blank" rel="external">iccv15</a></p>
 <hr>
 <a id="more"></a>
-<h1 id="3-3D-ConvNets"><a href="#3-3D-ConvNets" class="headerlink" title="3. 3D ConvNets"></a><strong>3. 3D ConvNets</strong></h1><p>又是从第三章开始。3D convnet就不叙述了。文中把视频截断成16-frame的clips，所以input就变成了3x16x128x171。然后在随机crop成3x16x112x112的图片，可以增加数据量，但是这种数据量的增加我觉得需要打折扣，并不能完全乘以16x59这样计算。我觉得这里是讲的train from scratch on UCF101，所以用的网络比较小，5个卷积层，3个fc，2048，2048，101。batch size = 30, lr = 0.003， 4 epochs之后除以10， 总共16个epochs。</p>
+<h1 id="3-3D-ConvNets"><a href="#3-3D-ConvNets" class="headerlink" title="3. 3D ConvNets"></a><strong>3. 3D ConvNets</strong></h1><p>又是从第三章开始。3D convnet就不叙述了。文中把视频截断成16-frame的clips，所以input就变成了3x16x128x171。然后在随机crop成3x16x112x112的图片，可以增加数据量，但是这种数据量的增加我觉得需要打折扣，并不能完全乘以16x59这样计算。我觉得这里是讲的train from scratch on UCF101，所以用的网络比较小，5个卷积层，3个fc，2048，2048，101。batch size = 30, lr = 0.003， 4 epochs之后除以10， 总共16个epochs0。 </p>
 <p>然后讨论了depth应该取多少，最后好像是3最好。但是train from scratch最多到达45%的准确率（clip-based）。</p>
 <p><strong>问题1</strong><br>但是可以从图中看到，在epoch 3,4的时候，accuracy是降低的，然后过了4，又升上去了，好奇怪，正常吗?</p>
 <p>然后就开始正常的训练了，实际上作者是用的他们自己的数据库I380K训练的，这个好像是用了8个convnet，5个pooling，fc4096，4096，101。然后在这个数据库的基础上再fine-tuning。好像引用中[29]的准确律在sport1m上比C3D还要高，文中说120-frame的clips不能直接跟文中的16-frame的准确率比较。</p>
@@ -346,6 +346,10 @@ Database: UC">
           </div>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/05/10/test/" rel="prev" title="Learning Spatiotemporal Features with 3D Convolutional Networks#PaperReading#">
+                Learning Spatiotemporal Features with 3D Convolutional Networks#PaperReading# <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -417,7 +421,7 @@ Database: UC">
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">8</span>
+              <span class="site-state-item-count">9</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

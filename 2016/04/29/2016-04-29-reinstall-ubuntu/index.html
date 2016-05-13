@@ -288,7 +288,7 @@
 <p>And download a teamviewer deb (32 or 64 is not important, I think. My computer is 64-bit but I’m using the 32-bit version). Install it by </p>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">sudo</span> <span class="selector-tag">dkpg</span> <span class="selector-tag">-i</span> <span class="selector-tag">teamviewer_11</span><span class="selector-class">.0</span><span class="selector-class">.57095_i386</span><span class="selector-class">.deb</span></span><br></pre></td></tr></table></figure>
 <p>There will be some errors. Then</p>
-<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="keyword">get</span> -f install</span><br></pre></td></tr></table></figure>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get -f <span class="keyword">install</span></span><br></pre></td></tr></table></figure>
 <p>This is the command that removes all. But this time no problem. Maybe something wrong at first time, maybe I taped sudo apt-get install -f. But I didn’t figure out the diffrence.</p>
 <hr>
 <h1 id="Install-Jekyll"><a href="#Install-Jekyll" class="headerlink" title="Install Jekyll"></a>Install Jekyll</h1><p>jekyll is for locally compiling github pages and showing them. Before I’ve already installed it but after the reinstallation of ubuntu, all gone. So I have to reinstall it.</p>
@@ -412,7 +412,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">8</span>
+              <span class="site-state-item-count">9</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

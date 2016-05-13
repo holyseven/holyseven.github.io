@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="caffe," />
+  <meta name="keywords" content="PaperReading," />
 
 
 
@@ -84,16 +84,28 @@
 
 
 
-<meta name="description" content="重写convert_imageset">
+<meta name="description" content="KeyWords: 3d convnet, action recognition.
+
+Paper Author: Du Tran, Lubomir Bourdev, Rob Fergus, Lorenzo Torresani, Manohar Paluri
+Research Institu: Facebook AI Reasearch, Dartmouth College
+Database: UC">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Caffe Code Reading - Convert Image Set">
-<meta property="og:url" content="http://yoursite.com/2016/04/27/2016-04-27-caffe-code-convert-imageset/index.html">
+<meta property="og:title" content="Learning Spatiotemporal Features with 3D Convolutional Networks#PaperReading#">
+<meta property="og:url" content="http://yoursite.com/2016/05/10/test/index.html">
 <meta property="og:site_name" content="holyseven's blog">
-<meta property="og:description" content="重写convert_imageset">
-<meta property="og:updated_time" content="2016-05-13T08:33:30.848Z">
+<meta property="og:description" content="KeyWords: 3d convnet, action recognition.
+
+Paper Author: Du Tran, Lubomir Bourdev, Rob Fergus, Lorenzo Torresani, Manohar Paluri
+Research Institu: Facebook AI Reasearch, Dartmouth College
+Database: UC">
+<meta property="og:updated_time" content="2016-05-13T08:59:17.732Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Caffe Code Reading - Convert Image Set">
-<meta name="twitter:description" content="重写convert_imageset">
+<meta name="twitter:title" content="Learning Spatiotemporal Features with 3D Convolutional Networks#PaperReading#">
+<meta name="twitter:description" content="KeyWords: 3d convnet, action recognition.
+
+Paper Author: Du Tran, Lubomir Bourdev, Rob Fergus, Lorenzo Torresani, Manohar Paluri
+Research Institu: Facebook AI Reasearch, Dartmouth College
+Database: UC">
 
 
 
@@ -111,7 +123,7 @@
   };
 </script>
 
-  <title> Caffe Code Reading - Convert Image Set | holyseven's blog </title>
+  <title> Learning Spatiotemporal Features with 3D Convolutional Networks#PaperReading# | holyseven's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -231,7 +243,7 @@
             
             
               
-                Caffe Code Reading - Convert Image Set
+                Learning Spatiotemporal Features with 3D Convolutional Networks#PaperReading#
               
             
           </h1>
@@ -243,8 +255,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-04-27T10:00:00+02:00" content="2016-04-27">
-              2016-04-27
+            <time itemprop="dateCreated" datetime="2016-05-10T10:00:00+02:00" content="2016-05-10">
+              2016-05-10
             </time>
           </span>
 
@@ -254,8 +266,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/04/27/2016-04-27-caffe-code-convert-imageset/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/27/2016-04-27-caffe-code-convert-imageset/" itemprop="commentsCount"></span>
+                <a href="/2016/05/10/test/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/10/test/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -278,9 +290,25 @@
       
 
       
-        <p>重写了tools/convert_imageset。还不算太难，把video里读出来的Mat用cv::merge就可以连成一个48个channels的datum了。所以这个frame的长度预先定义好了。。就这个而言的话，并不是很好。居然忘记了set_label，还好在训练开始的时候就看到了loss都直接为0了，然后发现这个问题，最后加上了，然后重新生成lmdb，还要重新拷贝到服务器上去，重新训练。</p>
-<p>然后使用了reshape layer增加了一个dimension，应该是没有把数据弄乱。</p>
-<p>两个GPU互相之间的通信应该会占用一定的内存，或者在读取数据的时候会有一定的mutex机制，所以之前数据是以单个文件存在的时候，GPU的速度也受影响。但是使用lmdb这种数据库的话，读取速度特别快，即使GPU内存很高也没有问题，两个使用率都能达到99%。</p>
+        <p><strong>KeyWords</strong>: 3d convnet, action recognition.</p>
+<hr>
+<p><strong>Paper Author</strong>: Du Tran, Lubomir Bourdev, Rob Fergus, Lorenzo Torresani, Manohar Paluri</p>
+<p><strong>Research Institu</strong>: Facebook AI Reasearch, Dartmouth College</p>
+<p><strong>Database</strong>: UCF101, Sport1m, I380K(internal database)</p>
+<p><strong>GPU &amp; timing</strong>: </p>
+<p><strong>Paper Link</strong>: <a href="http://www.cv-foundation.org/openaccess/content_iccv_2015/html/Tran_Learning_Spatiotemporal_Features_ICCV_2015_paper.html" target="_blank" rel="external">iccv15</a></p>
+<hr>
+<a id="more"></a>
+<h1 id="3-3D-ConvNets"><a href="#3-3D-ConvNets" class="headerlink" title="3. 3D ConvNets"></a><strong>3. 3D ConvNets</strong></h1><p>又是从第三章开始。3D convnet就不叙述了。文中把视频截断成16-frame的clips，所以input就变成了3x16x128x171。然后在随机crop成3x16x112x112的图片，可以增加数据量，但是这种数据量的增加我觉得需要打折扣，并不能完全乘以16x59这样计算。我觉得这里是讲的train from scratch on UCF101，所以用的网络比较小，5个卷积层，3个fc，2048，2048，101。batch size = 30, lr = 0.003， 4 epochs之后除以10， 总共16个epochs0。 </p>
+<p>然后讨论了depth应该取多少，最后好像是3最好。但是train from scratch最多到达45%的准确率（clip-based）。</p>
+<p><strong>问题1</strong><br>但是可以从图中看到，在epoch 3,4的时候，accuracy是降低的，然后过了4，又升上去了，好奇怪，正常吗?</p>
+<p>然后就开始正常的训练了，实际上作者是用的他们自己的数据库I380K训练的，这个好像是用了8个convnet，5个pooling，fc4096，4096，101。然后在这个数据库的基础上再fine-tuning。好像引用中[29]的准确律在sport1m上比C3D还要高，文中说120-frame的clips不能直接跟文中的16-frame的准确率比较。</p>
+<p>文中的准确率的图表真让人看得眼花缭乱。 Table 2里面说的C3D(trained from scratch) 44.9, 60.0, 84.4, C3D(fine-tuned from I380K pre-trained model)在单个clip上的是46.1，单个video上的是61.1，单个video@5 is 85.2。但是再第4章里有又说，</p>
+<blockquote>
+<p>C3D with 3 nets boosts the accuracy to 85.2% with the dimension is increased to 12,288.</p>
+</blockquote>
+<p>In table 3, C3D(1 net) + SVM: 82.3, C3D(3 nets) + SVM: 85.2</p>
+<p>唉，导师说我这篇文章没有仔细看明白，感觉看明白了也做不出来啊。首先因为他用了自己的数据库。然后不知道如果从sport1m入手的准确率怎么样。反正现在用ucf101，准确率最多到37，38%左右。离作者说的45%还差一截，不过我觉得差的也只是其中的一些参数的调整了。但是这个45%，是建立在training data的准确率是接近100%的，这样难道不是overfitting吗？</p>
 
       
     </div>
@@ -302,7 +330,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/caffe/" rel="tag">#caffe</a>
+            <a href="/tags/PaperReading/" rel="tag">#PaperReading</a>
           
         </div>
       
@@ -311,17 +339,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/04/26/2016-04-26-caffe-code-reading-layer/" rel="next" title="Caffe Code Reading - blob and layer">
-                <i class="fa fa-chevron-left"></i> Caffe Code Reading - blob and layer
+              <a href="/2016/05/10/2016-05-10-ReadingPaper-C3D/" rel="next" title="Learning Spatiotemporal Features with 3D Convolutional Networks#PaperReading#">
+                <i class="fa fa-chevron-left"></i> Learning Spatiotemporal Features with 3D Convolutional Networks#PaperReading#
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/04/29/2016-04-29-reinstall-ubuntu/" rel="prev" title="Reinstall Ubuntu 14.04 and Teamviewer, jekyll">
-                Reinstall Ubuntu 14.04 and Teamviewer, jekyll <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -347,8 +371,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/04/27/2016-04-27-caffe-code-convert-imageset/"
-           data-title="Caffe Code Reading - Convert Image Set" data-url="http://yoursite.com/2016/04/27/2016-04-27-caffe-code-convert-imageset/">
+      <div class="ds-thread" data-thread-key="2016/05/10/test/"
+           data-title="Learning Spatiotemporal Features with 3D Convolutional Networks#PaperReading#" data-url="http://yoursite.com/2016/05/10/test/">
       </div>
     
   </div>
@@ -432,7 +456,7 @@
               
             
             
-              <p class="post-toc-empty">此文章未包含目录</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#3-3D-ConvNets"><span class="nav-number">1.</span> <span class="nav-text">3. 3D ConvNets</span></a></li></ol></div>
             
           </div>
         </section>
