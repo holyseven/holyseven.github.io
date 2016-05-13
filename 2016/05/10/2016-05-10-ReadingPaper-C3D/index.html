@@ -98,7 +98,7 @@ Database: UC">
 Paper Author: Du Tran, Lubomir Bourdev, Rob Fergus, Lorenzo Torresani, Manohar Paluri
 Research Institu: Facebook AI Reasearch, Dartmouth College
 Database: UC">
-<meta property="og:updated_time" content="2016-05-13T08:27:56.708Z">
+<meta property="og:updated_time" content="2016-05-13T08:33:55.360Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Learning Spatiotemporal Features with 3D Convolutional Networks#PaperReading#">
 <meta name="twitter:description" content="KeyWords: 3d convnet, action recognition.
@@ -298,6 +298,7 @@ Database: UC">
 <p><strong>GPU &amp; timing</strong>: </p>
 <p><strong>Paper Link</strong>: <a href="http://www.cv-foundation.org/openaccess/content_iccv_2015/html/Tran_Learning_Spatiotemporal_Features_ICCV_2015_paper.html" target="_blank" rel="external">iccv15</a></p>
 <hr>
+<a id="more"></a>
 <h1 id="3-3D-ConvNets"><a href="#3-3D-ConvNets" class="headerlink" title="3. 3D ConvNets"></a><strong>3. 3D ConvNets</strong></h1><p>又是从第三章开始。3D convnet就不叙述了。文中把视频截断成16-frame的clips，所以input就变成了3x16x128x171。然后在随机crop成3x16x112x112的图片，可以增加数据量，但是这种数据量的增加我觉得需要打折扣，并不能完全乘以16x59这样计算。我觉得这里是讲的train from scratch on UCF101，所以用的网络比较小，5个卷积层，3个fc，2048，2048，101。batch size = 30, lr = 0.003， 4 epochs之后除以10， 总共16个epochs。</p>
 <p>然后讨论了depth应该取多少，最后好像是3最好。但是train from scratch最多到达45%的准确率（clip-based）。</p>
 <p><strong>问题1</strong><br>但是可以从图中看到，在epoch 3,4的时候，accuracy是降低的，然后过了4，又升上去了，好奇怪，正常吗?</p>

@@ -84,22 +84,16 @@
 
 
 
-<meta name="description" content="No idea why all are removed by a command, including ubuntu-desktop etc.
-
-Install Ubuntu14.04 and allSo reinstall ubuntu14.04 from scratch and configure all. For avoiding this situation next time, I’ve">
+<meta name="description" content="No idea why all are removed by a command, including ubuntu-desktop etc.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Reinstall Ubuntu 14.04 and Teamviewer, jekyll">
 <meta property="og:url" content="http://yoursite.com/2016/04/29/2016-04-29-reinstall-ubuntu/index.html">
 <meta property="og:site_name" content="holyseven's blog">
-<meta property="og:description" content="No idea why all are removed by a command, including ubuntu-desktop etc.
-
-Install Ubuntu14.04 and allSo reinstall ubuntu14.04 from scratch and configure all. For avoiding this situation next time, I’ve">
-<meta property="og:updated_time" content="2016-05-13T08:27:29.728Z">
+<meta property="og:description" content="No idea why all are removed by a command, including ubuntu-desktop etc.">
+<meta property="og:updated_time" content="2016-05-13T08:33:42.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Reinstall Ubuntu 14.04 and Teamviewer, jekyll">
-<meta name="twitter:description" content="No idea why all are removed by a command, including ubuntu-desktop etc.
-
-Install Ubuntu14.04 and allSo reinstall ubuntu14.04 from scratch and configure all. For avoiding this situation next time, I’ve">
+<meta name="twitter:description" content="No idea why all are removed by a command, including ubuntu-desktop etc.">
 
 
 
@@ -285,6 +279,7 @@ Install Ubuntu14.04 and allSo reinstall ubuntu14.04 from scratch and configure a
 
       
         <p>No idea why all are removed by a command, including ubuntu-desktop etc.</p>
+<a id="more"></a>
 <hr>
 <h1 id="Install-Ubuntu14-04-and-all"><a href="#Install-Ubuntu14-04-and-all" class="headerlink" title="Install Ubuntu14.04 and all"></a>Install Ubuntu14.04 and all</h1><p>So reinstall ubuntu14.04 from scratch and configure all. For avoiding this situation next time, I’ve noted some installation in my <a href="https://github.com/holyseven/configuration_files/blob/master/run.sh" target="_blank" rel="external">git</a>. Luckily, I have copied the modified caffe in another disk.</p>
 <p>Nothing difficult and strange I’ve met. So just following these steps. Maybe there is something about backup but I don’t want to test it any more. Hope I will never touch these.</p>
@@ -293,7 +288,7 @@ Install Ubuntu14.04 and allSo reinstall ubuntu14.04 from scratch and configure a
 <p>And download a teamviewer deb (32 or 64 is not important, I think. My computer is 64-bit but I’m using the 32-bit version). Install it by </p>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">sudo</span> <span class="selector-tag">dkpg</span> <span class="selector-tag">-i</span> <span class="selector-tag">teamviewer_11</span><span class="selector-class">.0</span><span class="selector-class">.57095_i386</span><span class="selector-class">.deb</span></span><br></pre></td></tr></table></figure>
 <p>There will be some errors. Then</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get -f <span class="keyword">install</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="keyword">get</span> -f install</span><br></pre></td></tr></table></figure>
 <p>This is the command that removes all. But this time no problem. Maybe something wrong at first time, maybe I taped sudo apt-get install -f. But I didn’t figure out the diffrence.</p>
 <hr>
 <h1 id="Install-Jekyll"><a href="#Install-Jekyll" class="headerlink" title="Install Jekyll"></a>Install Jekyll</h1><p>jekyll is for locally compiling github pages and showing them. Before I’ve already installed it but after the reinstallation of ubuntu, all gone. So I have to reinstall it.</p>

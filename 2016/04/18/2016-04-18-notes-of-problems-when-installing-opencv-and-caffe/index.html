@@ -84,19 +84,16 @@
 
 
 
-<meta name="description" content="Some problems I’ve met when I was installing opencv and caffe.
-OpenCV Install ProblemsBecause of some problems, I have to install two versions of opencv (2.4.12 and 3.1.0, at 18 Avril 2016). But when">
+<meta name="description" content="Some problems I’ve met when I was installing opencv and caffe.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Notes of problems when installing opencv and caffe">
 <meta property="og:url" content="http://yoursite.com/2016/04/18/2016-04-18-notes-of-problems-when-installing-opencv-and-caffe/index.html">
 <meta property="og:site_name" content="holyseven's blog">
-<meta property="og:description" content="Some problems I’ve met when I was installing opencv and caffe.
-OpenCV Install ProblemsBecause of some problems, I have to install two versions of opencv (2.4.12 and 3.1.0, at 18 Avril 2016). But when">
-<meta property="og:updated_time" content="2016-05-13T08:26:04.728Z">
+<meta property="og:description" content="Some problems I’ve met when I was installing opencv and caffe.">
+<meta property="og:updated_time" content="2016-05-13T08:31:31.536Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Notes of problems when installing opencv and caffe">
-<meta name="twitter:description" content="Some problems I’ve met when I was installing opencv and caffe.
-OpenCV Install ProblemsBecause of some problems, I have to install two versions of opencv (2.4.12 and 3.1.0, at 18 Avril 2016). But when">
+<meta name="twitter:description" content="Some problems I’ve met when I was installing opencv and caffe.">
 
 
 
@@ -282,6 +279,7 @@ OpenCV Install ProblemsBecause of some problems, I have to install two versions 
 
       
         <p>Some problems I’ve met when I was installing opencv and caffe.</p>
+<a id="more"></a>
 <h1 id="OpenCV-Install-Problems"><a href="#OpenCV-Install-Problems" class="headerlink" title="OpenCV Install Problems"></a>OpenCV Install Problems</h1><p>Because of some problems, I have to install two versions of opencv (2.4.12 and 3.1.0, at 18 Avril 2016). But when I compile the source of opencv, I have to point out the install dir of opencv. At first, I use opencv2.4.10 and opencv 3.1.0, but when the program tries to find opencv, the dir is not correct. After changing to opencv2412 and opencv310, there is no problem any more.</p>
 <p>I just have to add </p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span>(CMAKE_PREFIX_PATH <span class="string">"/usr/local/opencv2.4"</span>)</span><br><span class="line"><span class="keyword">find_package</span>( OpenCV <span class="number">2.4</span> REQUIRED )</span><br></pre></td></tr></table></figure>
