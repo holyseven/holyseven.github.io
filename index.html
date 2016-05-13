@@ -233,7 +233,464 @@
             
               
                 
-                <a class="post-title-link" href="/2016/05/13/2016-04-26-caffe-code-reading-layer/" itemprop="url">
+                <a class="post-title-link" href="/2016/05/10/2016-05-10-ReadingPaper-C3D/" itemprop="url">
+                  Learning Spatiotemporal Features with 3D Convolutional Networks#PaperReading#
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-05-10T10:00:00+02:00" content="2016-05-10">
+              2016-05-10
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/10/2016-05-10-ReadingPaper-C3D/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/10/2016-05-10-ReadingPaper-C3D/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><strong>KeyWords</strong>: 3d convnet, action recognition.</p>
+<hr>
+<p><strong>Paper Author</strong>: Du Tran, Lubomir Bourdev, Rob Fergus, Lorenzo Torresani, Manohar Paluri</p>
+<p><strong>Research Institu</strong>: Facebook AI Reasearch, Dartmouth College</p>
+<p><strong>Database</strong>: UCF101, Sport1m, I380K(internal database)</p>
+<p><strong>GPU &amp; timing</strong>: </p>
+<p><strong>Paper Link</strong>: <a href="http://www.cv-foundation.org/openaccess/content_iccv_2015/html/Tran_Learning_Spatiotemporal_Features_ICCV_2015_paper.html" target="_blank" rel="external">iccv15</a></p>
+<hr>
+<h1 id="3-3D-ConvNets"><a href="#3-3D-ConvNets" class="headerlink" title="3. 3D ConvNets"></a><strong>3. 3D ConvNets</strong></h1><p>又是从第三章开始。3D convnet就不叙述了。文中把视频截断成16-frame的clips，所以input就变成了3x16x128x171。然后在随机crop成3x16x112x112的图片，可以增加数据量，但是这种数据量的增加我觉得需要打折扣，并不能完全乘以16x59这样计算。我觉得这里是讲的train from scratch on UCF101，所以用的网络比较小，5个卷积层，3个fc，2048，2048，101。batch size = 30, lr = 0.003， 4 epochs之后除以10， 总共16个epochs。</p>
+<p>然后讨论了depth应该取多少，最后好像是3最好。但是train from scratch最多到达45%的准确率（clip-based）。</p>
+<p><strong>问题1</strong><br>但是可以从图中看到，在epoch 3,4的时候，accuracy是降低的，然后过了4，又升上去了，好奇怪，正常吗?</p>
+<p>然后就开始正常的训练了，实际上作者是用的他们自己的数据库I380K训练的，这个好像是用了8个convnet，5个pooling，fc4096，4096，101。然后在这个数据库的基础上再fine-tuning。好像引用中[29]的准确律在sport1m上比C3D还要高，文中说120-frame的clips不能直接跟文中的16-frame的准确率比较。</p>
+<p>文中的准确率的图表真让人看得眼花缭乱。 Table 2里面说的C3D(trained from scratch) 44.9, 60.0, 84.4, C3D(fine-tuned from I380K pre-trained model)在单个clip上的是46.1，单个video上的是61.1，单个video@5 is 85.2。但是再第4章里有又说，</p>
+<blockquote>
+<p>C3D with 3 nets boosts the accuracy to 85.2% with the dimension is increased to 12,288.</p>
+</blockquote>
+<p>In table 3, C3D(1 net) + SVM: 82.3, C3D(3 nets) + SVM: 85.2</p>
+<p>唉，导师说我这篇文章没有仔细看明白，感觉看明白了也做不出来啊。首先因为他用了自己的数据库。然后不知道如果从sport1m入手的准确率怎么样。反正现在用ucf101，准确率最多到37，38%左右。离作者说的45%还差一截，不过我觉得差的也只是其中的一些参数的调整了。但是这个45%，是建立在training data的准确率是接近100%的，这样难道不是overfitting吗？</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/05/03/2016-05-03-ReadingPaper-FCN/" itemprop="url">
+                  Fully Convolutional Networks#PaperReading#
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-05-03T10:00:00+02:00" content="2016-05-03">
+              2016-05-03
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/03/2016-05-03-ReadingPaper-FCN/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/03/2016-05-03-ReadingPaper-FCN/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><strong>KeyWords</strong>: semantic segmentation, fully convolutional</p>
+<hr>
+<p><strong>Paper Author</strong>: Jonathan Long, Evan Shlhamer Trevor Darrell</p>
+<p><strong>Research Institu</strong>: Berkeley</p>
+<p><strong>Database</strong>: VOC, NYUDv2, SIFT Flow</p>
+<p><strong>GPU &amp; timing</strong>: NVIDIA K40c GPU</p>
+<p><strong>Paper Link</strong>: <a href="http://www.cv-foundation.org/openaccess/content_cvpr_2015/html/Long_Fully_Convolutional_Networks_2015_CVPR_paper.html" target="_blank" rel="external">cvpr15</a></p>
+<hr>
+<h1 id="3-FCN"><a href="#3-FCN" class="headerlink" title="3. FCN"></a><strong>3. FCN</strong></h1><p>直接跳到第三章来，不知道前两章在讲什么，看得我好困啊。</p>
+<p>3.1首先说了把fc-layer变成1X1的convnet，这样就可以接受不同size的image了，只是输出的尺寸是根据输入的变化而变化的。文中的有些话一直不懂：</p>
+<blockquote>
+<p>When these receptive fields overlap significantly, both feedforward computation and backpropagation are much more efficient when computed layer-by-layer over an entire image instead of independently patch-by-patch.</p>
+<p>Furthermore, while the resulting maps are equivalent to the evaluation of the original net on particular input patches, the computation is highly amortized over the overlapping regions of those patches.</p>
+</blockquote>
+<p><strong>问题1</strong>： 为什么因为receptive field overlap，计算量就会大大降低？是因为SPP-layer吗？但是代码中并没有使用这种layer啊？不懂。。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/04/29/2016-04-29-reinstall-ubuntu/" itemprop="url">
+                  Reinstall Ubuntu 14.04 and Teamviewer, jekyll
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-04-29T10:00:00+02:00" content="2016-04-29">
+              2016-04-29
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/04/29/2016-04-29-reinstall-ubuntu/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/29/2016-04-29-reinstall-ubuntu/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>No idea why all are removed by a command, including ubuntu-desktop etc.</p>
+<hr>
+<h1 id="Install-Ubuntu14-04-and-all"><a href="#Install-Ubuntu14-04-and-all" class="headerlink" title="Install Ubuntu14.04 and all"></a>Install Ubuntu14.04 and all</h1><p>So reinstall ubuntu14.04 from scratch and configure all. For avoiding this situation next time, I’ve noted some installation in my <a href="https://github.com/holyseven/configuration_files/blob/master/run.sh" target="_blank" rel="external">git</a>. Luckily, I have copied the modified caffe in another disk.</p>
+<p>Nothing difficult and strange I’ve met. So just following these steps. Maybe there is something about backup but I don’t want to test it any more. Hope I will never touch these.</p>
+<hr>
+<h1 id="Teamviewer"><a href="#Teamviewer" class="headerlink" title="Teamviewer"></a>Teamviewer</h1><p>It’s about the remote access from distance, like a functinality in qq. Just download a quicksupport <a href="http://www.teamviewer.com/en/download/previous-versions/#version11" target="_blank" rel="external">here</a> in a computer which you want to control.</p>
+<p>And download a teamviewer deb (32 or 64 is not important, I think. My computer is 64-bit but I’m using the 32-bit version). Install it by </p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">sudo</span> <span class="selector-tag">dkpg</span> <span class="selector-tag">-i</span> <span class="selector-tag">teamviewer_11</span><span class="selector-class">.0</span><span class="selector-class">.57095_i386</span><span class="selector-class">.deb</span></span><br></pre></td></tr></table></figure>
+<p>There will be some errors. Then</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get -f <span class="keyword">install</span></span><br></pre></td></tr></table></figure>
+<p>This is the command that removes all. But this time no problem. Maybe something wrong at first time, maybe I taped sudo apt-get install -f. But I didn’t figure out the diffrence.</p>
+<hr>
+<h1 id="Install-Jekyll"><a href="#Install-Jekyll" class="headerlink" title="Install Jekyll"></a>Install Jekyll</h1><p>jekyll is for locally compiling github pages and showing them. Before I’ve already installed it but after the reinstallation of ubuntu, all gone. So I have to reinstall it.</p>
+<p>Look at <a href="https://help.github.com/articles/setting-up-your-github-pages-site-locally-with-jekyll/" target="_blank" rel="external">this</a>. And it needs to compile ruby 2.3, at the end of <a href="https://www.ruby-lang.org/en/documentation/installation/" target="_blank" rel="external">this page</a>. When install ruby, pop out the problem of openssl. I follow these: </p>
+<figure class="highlight q"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="built_in">get</span> install libssl-<span class="built_in">dev</span> libreadline-<span class="built_in">dev</span></span><br></pre></td></tr></table></figure>
+<p>and in the directory of ruby source:  </p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pushd <span class="keyword">ext/openssl</span><br><span class="line"></span>ruby <span class="keyword">extconf.rb</span><br><span class="line"></span>make &amp;&amp; sudo make <span class="keyword">install</span><br><span class="line"></span>popd</span><br></pre></td></tr></table></figure>
+<p>Then sudo make clean and sudo make install. So ruby2.3 is installed with openssl.</p>
+<p>Then</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd ~/phdwork/myblogs</span><br><span class="line">sudo apt-get <span class="keyword">install</span> nodejs <span class="comment"># JavaScript-runtime</span></span><br><span class="line">bundle <span class="keyword">install</span> <span class="comment"># This will install jekyll, because I have already have a Gemfile in this directory</span></span><br></pre></td></tr></table></figure>
+<hr>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/04/27/2016-04-27-caffe-code-convert-imageset/" itemprop="url">
+                  Caffe Code Reading - Convert Image Set
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-04-27T10:00:00+02:00" content="2016-04-27">
+              2016-04-27
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/04/27/2016-04-27-caffe-code-convert-imageset/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/27/2016-04-27-caffe-code-convert-imageset/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>重写了tools/convert_imageset。还不算太难，把video里读出来的Mat用cv::merge就可以连成一个48个channels的datum了。所以这个frame的长度预先定义好了。。就这个而言的话，并不是很好。居然忘记了set_label，还好在训练开始的时候就看到了loss都直接为0了，然后发现这个问题，最后加上了，然后重新生成lmdb，还要重新拷贝到服务器上去，重新训练。</p>
+<p>然后使用了reshape layer增加了一个dimension，应该是没有把数据弄乱。</p>
+<p>两个GPU互相之间的通信应该会占用一定的内存，或者在读取数据的时候会有一定的mutex机制，所以之前数据是以单个文件存在的时候，GPU的速度也受影响。但是使用lmdb这种数据库的话，读取速度特别快，即使GPU内存很高也没有问题，两个使用率都能达到99%。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/04/26/2016-04-26-caffe-code-reading-layer/" itemprop="url">
                   Caffe Code Reading - blob and layer
                 </a>
               
@@ -247,8 +704,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-05-13T01:44:05+02:00" content="2016-05-13">
-              2016-05-13
+            <time itemprop="dateCreated" datetime="2016-04-26T10:00:00+02:00" content="2016-04-26">
+              2016-04-26
             </time>
           </span>
 
@@ -258,8 +715,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/05/13/2016-04-26-caffe-code-reading-layer/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/13/2016-04-26-caffe-code-reading-layer/" itemprop="commentsCount"></span>
+                <a href="/2016/04/26/2016-04-26-caffe-code-reading-layer/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/26/2016-04-26-caffe-code-reading-layer/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -344,7 +801,7 @@
             
               
                 
-                <a class="post-title-link" href="/2016/05/13/2016-04-25-caffe-code-reading-translating-official-tutorial/" itemprop="url">
+                <a class="post-title-link" href="/2016/04/25/2016-04-25-caffe-code-reading-translating-official-tutorial/" itemprop="url">
                   Caffe Code Reading - translating official tutorial
                 </a>
               
@@ -358,8 +815,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-05-13T01:43:58+02:00" content="2016-05-13">
-              2016-05-13
+            <time itemprop="dateCreated" datetime="2016-04-25T10:00:00+02:00" content="2016-04-25">
+              2016-04-25
             </time>
           </span>
 
@@ -369,8 +826,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/05/13/2016-04-25-caffe-code-reading-translating-official-tutorial/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/13/2016-04-25-caffe-code-reading-translating-official-tutorial/" itemprop="commentsCount"></span>
+                <a href="/2016/04/25/2016-04-25-caffe-code-reading-translating-official-tutorial/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/25/2016-04-25-caffe-code-reading-translating-official-tutorial/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -504,464 +961,7 @@
             
               
                 
-                <a class="post-title-link" href="/2016/05/13/2016-05-03-ReadingPaper-FCN/" itemprop="url">
-                  Fully Convolutional Networks#PaperReading#
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-05-13T01:42:11+02:00" content="2016-05-13">
-              2016-05-13
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/05/13/2016-05-03-ReadingPaper-FCN/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/13/2016-05-03-ReadingPaper-FCN/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><strong>KeyWords</strong>: semantic segmentation, fully convolutional</p>
-<hr>
-<p><strong>Paper Author</strong>: Jonathan Long, Evan Shlhamer Trevor Darrell</p>
-<p><strong>Research Institu</strong>: Berkeley</p>
-<p><strong>Database</strong>: VOC, NYUDv2, SIFT Flow</p>
-<p><strong>GPU &amp; timing</strong>: NVIDIA K40c GPU</p>
-<p><strong>Paper Link</strong>: <a href="http://www.cv-foundation.org/openaccess/content_cvpr_2015/html/Long_Fully_Convolutional_Networks_2015_CVPR_paper.html" target="_blank" rel="external">cvpr15</a></p>
-<hr>
-<h1 id="3-FCN"><a href="#3-FCN" class="headerlink" title="3. FCN"></a><strong>3. FCN</strong></h1><p>直接跳到第三章来，不知道前两章在讲什么，看得我好困啊。</p>
-<p>3.1首先说了把fc-layer变成1X1的convnet，这样就可以接受不同size的image了，只是输出的尺寸是根据输入的变化而变化的。文中的有些话一直不懂：</p>
-<blockquote>
-<p>When these receptive fields overlap significantly, both feedforward computation and backpropagation are much more efficient when computed layer-by-layer over an entire image instead of independently patch-by-patch.</p>
-<p>Furthermore, while the resulting maps are equivalent to the evaluation of the original net on particular input patches, the computation is highly amortized over the overlapping regions of those patches.</p>
-</blockquote>
-<p><strong>问题1</strong>： 为什么因为receptive field overlap，计算量就会大大降低？是因为SPP-layer吗？但是代码中并没有使用这种layer啊？不懂。。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/05/13/2016-05-10-ReadingPaper-C3D/" itemprop="url">
-                  Learning Spatiotemporal Features with 3D Convolutional Networks#PaperReading#
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-05-13T01:40:27+02:00" content="2016-05-13">
-              2016-05-13
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/05/13/2016-05-10-ReadingPaper-C3D/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/13/2016-05-10-ReadingPaper-C3D/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><strong>KeyWords</strong>: 3d convnet, action recognition.</p>
-<hr>
-<p><strong>Paper Author</strong>: Du Tran, Lubomir Bourdev, Rob Fergus, Lorenzo Torresani, Manohar Paluri</p>
-<p><strong>Research Institu</strong>: Facebook AI Reasearch, Dartmouth College</p>
-<p><strong>Database</strong>: UCF101, Sport1m, I380K(internal database)</p>
-<p><strong>GPU &amp; timing</strong>: </p>
-<p><strong>Paper Link</strong>: <a href="http://www.cv-foundation.org/openaccess/content_iccv_2015/html/Tran_Learning_Spatiotemporal_Features_ICCV_2015_paper.html" target="_blank" rel="external">iccv15</a></p>
-<hr>
-<h1 id="3-3D-ConvNets"><a href="#3-3D-ConvNets" class="headerlink" title="3. 3D ConvNets"></a><strong>3. 3D ConvNets</strong></h1><p>又是从第三章开始。3D convnet就不叙述了。文中把视频截断成16-frame的clips，所以input就变成了3x16x128x171。然后在随机crop成3x16x112x112的图片，可以增加数据量，但是这种数据量的增加我觉得需要打折扣，并不能完全乘以16x59这样计算。我觉得这里是讲的train from scratch on UCF101，所以用的网络比较小，5个卷积层，3个fc，2048，2048，101。batch size = 30, lr = 0.003， 4 epochs之后除以10， 总共16个epochs。</p>
-<p>然后讨论了depth应该取多少，最后好像是3最好。但是train from scratch最多到达45%的准确率（clip-based）。</p>
-<p><strong>问题1</strong><br>但是可以从图中看到，在epoch 3,4的时候，accuracy是降低的，然后过了4，又升上去了，好奇怪，正常吗?</p>
-<p>然后就开始正常的训练了，实际上作者是用的他们自己的数据库I380K训练的，这个好像是用了8个convnet，5个pooling，fc4096，4096，101。然后在这个数据库的基础上再fine-tuning。好像引用中[29]的准确律在sport1m上比C3D还要高，文中说120-frame的clips不能直接跟文中的16-frame的准确率比较。</p>
-<p>文中的准确率的图表真让人看得眼花缭乱。 Table 2里面说的C3D(trained from scratch) 44.9, 60.0, 84.4, C3D(fine-tuned from I380K pre-trained model)在单个clip上的是46.1，单个video上的是61.1，单个video@5 is 85.2。但是再第4章里有又说，</p>
-<blockquote>
-<p>C3D with 3 nets boosts the accuracy to 85.2% with the dimension is increased to 12,288.</p>
-</blockquote>
-<p>In table 3, C3D(1 net) + SVM: 82.3, C3D(3 nets) + SVM: 85.2</p>
-<p>唉，导师说我这篇文章没有仔细看明白，感觉看明白了也做不出来啊。首先因为他用了自己的数据库。然后不知道如果从sport1m入手的准确率怎么样。反正现在用ucf101，准确率最多到37，38%左右。离作者说的45%还差一截，不过我觉得差的也只是其中的一些参数的调整了。但是这个45%，是建立在training data的准确率是接近100%的，这样难道不是overfitting吗？</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/05/13/2016-04-29-reinstall-ubuntu/" itemprop="url">
-                  Reinstall Ubuntu 14.04 and Teamviewer, jekyll
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-05-13T01:40:01+02:00" content="2016-05-13">
-              2016-05-13
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/05/13/2016-04-29-reinstall-ubuntu/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/13/2016-04-29-reinstall-ubuntu/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>No idea why all are removed by a command, including ubuntu-desktop etc.</p>
-<hr>
-<h1 id="Install-Ubuntu14-04-and-all"><a href="#Install-Ubuntu14-04-and-all" class="headerlink" title="Install Ubuntu14.04 and all"></a>Install Ubuntu14.04 and all</h1><p>So reinstall ubuntu14.04 from scratch and configure all. For avoiding this situation next time, I’ve noted some installation in my <a href="https://github.com/holyseven/configuration_files/blob/master/run.sh" target="_blank" rel="external">git</a>. Luckily, I have copied the modified caffe in another disk.</p>
-<p>Nothing difficult and strange I’ve met. So just following these steps. Maybe there is something about backup but I don’t want to test it any more. Hope I will never touch these.</p>
-<hr>
-<h1 id="Teamviewer"><a href="#Teamviewer" class="headerlink" title="Teamviewer"></a>Teamviewer</h1><p>It’s about the remote access from distance, like a functinality in qq. Just download a quicksupport <a href="http://www.teamviewer.com/en/download/previous-versions/#version11" target="_blank" rel="external">here</a> in a computer which you want to control.</p>
-<p>And download a teamviewer deb (32 or 64 is not important, I think. My computer is 64-bit but I’m using the 32-bit version). Install it by </p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">sudo</span> <span class="selector-tag">dkpg</span> <span class="selector-tag">-i</span> <span class="selector-tag">teamviewer_11</span><span class="selector-class">.0</span><span class="selector-class">.57095_i386</span><span class="selector-class">.deb</span></span><br></pre></td></tr></table></figure>
-<p>There will be some errors. Then</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get -f <span class="keyword">install</span></span><br></pre></td></tr></table></figure>
-<p>This is the command that removes all. But this time no problem. Maybe something wrong at first time, maybe I taped sudo apt-get install -f. But I didn’t figure out the diffrence.</p>
-<hr>
-<h1 id="Install-Jekyll"><a href="#Install-Jekyll" class="headerlink" title="Install Jekyll"></a>Install Jekyll</h1><p>jekyll is for locally compiling github pages and showing them. Before I’ve already installed it but after the reinstallation of ubuntu, all gone. So I have to reinstall it.</p>
-<p>Look at <a href="https://help.github.com/articles/setting-up-your-github-pages-site-locally-with-jekyll/" target="_blank" rel="external">this</a>. And it needs to compile ruby 2.3, at the end of <a href="https://www.ruby-lang.org/en/documentation/installation/" target="_blank" rel="external">this page</a>. When install ruby, pop out the problem of openssl. I follow these: </p>
-<figure class="highlight q"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="built_in">get</span> install libssl-<span class="built_in">dev</span> libreadline-<span class="built_in">dev</span></span><br></pre></td></tr></table></figure>
-<p>and in the directory of ruby source:  </p>
-<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pushd <span class="keyword">ext/openssl</span><br><span class="line"></span>ruby <span class="keyword">extconf.rb</span><br><span class="line"></span>make &amp;&amp; sudo make <span class="keyword">install</span><br><span class="line"></span>popd</span><br></pre></td></tr></table></figure>
-<p>Then sudo make clean and sudo make install. So ruby2.3 is installed with openssl.</p>
-<p>Then</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd ~/phdwork/myblogs</span><br><span class="line">sudo apt-get <span class="keyword">install</span> nodejs <span class="comment"># JavaScript-runtime</span></span><br><span class="line">bundle <span class="keyword">install</span> <span class="comment"># This will install jekyll, because I have already have a Gemfile in this directory</span></span><br></pre></td></tr></table></figure>
-<hr>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/05/13/2016-04-27-caffe-code-convert-imageset/" itemprop="url">
-                  Caffe Code Reading - Convert Image Set
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-05-13T01:39:38+02:00" content="2016-05-13">
-              2016-05-13
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/05/13/2016-04-27-caffe-code-convert-imageset/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/13/2016-04-27-caffe-code-convert-imageset/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>重写了tools/convert_imageset。还不算太难，把video里读出来的Mat用cv::merge就可以连成一个48个channels的datum了。所以这个frame的长度预先定义好了。。就这个而言的话，并不是很好。居然忘记了set_label，还好在训练开始的时候就看到了loss都直接为0了，然后发现这个问题，最后加上了，然后重新生成lmdb，还要重新拷贝到服务器上去，重新训练。</p>
-<p>然后使用了reshape layer增加了一个dimension，应该是没有把数据弄乱。</p>
-<p>两个GPU互相之间的通信应该会占用一定的内存，或者在读取数据的时候会有一定的mutex机制，所以之前数据是以单个文件存在的时候，GPU的速度也受影响。但是使用lmdb这种数据库的话，读取速度特别快，即使GPU内存很高也没有问题，两个使用率都能达到99%。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/05/13/2016-04-22-ReadingPaper-Fast-RCNN/" itemprop="url">
+                <a class="post-title-link" href="/2016/04/22/2016-04-22-ReadingPaper-Fast-RCNN/" itemprop="url">
                   Fast R-CNN#PaperReading#
                 </a>
               
@@ -975,8 +975,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-05-13T01:38:35+02:00" content="2016-05-13">
-              2016-05-13
+            <time itemprop="dateCreated" datetime="2016-04-22T10:00:00+02:00" content="2016-04-22">
+              2016-04-22
             </time>
           </span>
 
@@ -986,8 +986,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/05/13/2016-04-22-ReadingPaper-Fast-RCNN/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/13/2016-04-22-ReadingPaper-Fast-RCNN/" itemprop="commentsCount"></span>
+                <a href="/2016/04/22/2016-04-22-ReadingPaper-Fast-RCNN/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/22/2016-04-22-ReadingPaper-Fast-RCNN/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -1118,7 +1118,7 @@
             
               
                 
-                <a class="post-title-link" href="/2016/05/13/2016-04-18-notes-of-problems-when-installing-opencv-and-caffe/" itemprop="url">
+                <a class="post-title-link" href="/2016/04/18/2016-04-18-notes-of-problems-when-installing-opencv-and-caffe/" itemprop="url">
                   Notes of problems when installing opencv and caffe
                 </a>
               
@@ -1132,8 +1132,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-05-13T01:38:13+02:00" content="2016-05-13">
-              2016-05-13
+            <time itemprop="dateCreated" datetime="2016-04-18T10:00:00+02:00" content="2016-04-18">
+              2016-04-18
             </time>
           </span>
 
@@ -1143,8 +1143,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/05/13/2016-04-18-notes-of-problems-when-installing-opencv-and-caffe/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/13/2016-04-18-notes-of-problems-when-installing-opencv-and-caffe/" itemprop="commentsCount"></span>
+                <a href="/2016/04/18/2016-04-18-notes-of-problems-when-installing-opencv-and-caffe/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/18/2016-04-18-notes-of-problems-when-installing-opencv-and-caffe/" itemprop="commentsCount"></span>
                 </a>
               </span>
             

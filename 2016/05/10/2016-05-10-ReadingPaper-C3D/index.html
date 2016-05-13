@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="install problems," />
+  <meta name="keywords" content="PaperReading," />
 
 
 
@@ -84,19 +84,28 @@
 
 
 
-<meta name="description" content="Some problems I’ve met when I was installing opencv and caffe.
-OpenCV Install ProblemsBecause of some problems, I have to install two versions of opencv (2.4.12 and 3.1.0, at 18 Avril 2016). But when">
+<meta name="description" content="KeyWords: 3d convnet, action recognition.
+
+Paper Author: Du Tran, Lubomir Bourdev, Rob Fergus, Lorenzo Torresani, Manohar Paluri
+Research Institu: Facebook AI Reasearch, Dartmouth College
+Database: UC">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Notes of problems when installing opencv and caffe">
-<meta property="og:url" content="http://yoursite.com/2016/05/13/2016-04-18-notes-of-problems-when-installing-opencv-and-caffe/index.html">
+<meta property="og:title" content="Learning Spatiotemporal Features with 3D Convolutional Networks#PaperReading#">
+<meta property="og:url" content="http://yoursite.com/2016/05/10/2016-05-10-ReadingPaper-C3D/index.html">
 <meta property="og:site_name" content="holyseven's blog">
-<meta property="og:description" content="Some problems I’ve met when I was installing opencv and caffe.
-OpenCV Install ProblemsBecause of some problems, I have to install two versions of opencv (2.4.12 and 3.1.0, at 18 Avril 2016). But when">
-<meta property="og:updated_time" content="2016-05-12T23:38:13.224Z">
+<meta property="og:description" content="KeyWords: 3d convnet, action recognition.
+
+Paper Author: Du Tran, Lubomir Bourdev, Rob Fergus, Lorenzo Torresani, Manohar Paluri
+Research Institu: Facebook AI Reasearch, Dartmouth College
+Database: UC">
+<meta property="og:updated_time" content="2016-05-13T08:27:56.708Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Notes of problems when installing opencv and caffe">
-<meta name="twitter:description" content="Some problems I’ve met when I was installing opencv and caffe.
-OpenCV Install ProblemsBecause of some problems, I have to install two versions of opencv (2.4.12 and 3.1.0, at 18 Avril 2016). But when">
+<meta name="twitter:title" content="Learning Spatiotemporal Features with 3D Convolutional Networks#PaperReading#">
+<meta name="twitter:description" content="KeyWords: 3d convnet, action recognition.
+
+Paper Author: Du Tran, Lubomir Bourdev, Rob Fergus, Lorenzo Torresani, Manohar Paluri
+Research Institu: Facebook AI Reasearch, Dartmouth College
+Database: UC">
 
 
 
@@ -114,7 +123,7 @@ OpenCV Install ProblemsBecause of some problems, I have to install two versions 
   };
 </script>
 
-  <title> Notes of problems when installing opencv and caffe | holyseven's blog </title>
+  <title> Learning Spatiotemporal Features with 3D Convolutional Networks#PaperReading# | holyseven's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -234,7 +243,7 @@ OpenCV Install ProblemsBecause of some problems, I have to install two versions 
             
             
               
-                Notes of problems when installing opencv and caffe
+                Learning Spatiotemporal Features with 3D Convolutional Networks#PaperReading#
               
             
           </h1>
@@ -246,8 +255,8 @@ OpenCV Install ProblemsBecause of some problems, I have to install two versions 
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-05-13T01:38:13+02:00" content="2016-05-13">
-              2016-05-13
+            <time itemprop="dateCreated" datetime="2016-05-10T10:00:00+02:00" content="2016-05-10">
+              2016-05-10
             </time>
           </span>
 
@@ -257,8 +266,8 @@ OpenCV Install ProblemsBecause of some problems, I have to install two versions 
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/05/13/2016-04-18-notes-of-problems-when-installing-opencv-and-caffe/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/13/2016-04-18-notes-of-problems-when-installing-opencv-and-caffe/" itemprop="commentsCount"></span>
+                <a href="/2016/05/10/2016-05-10-ReadingPaper-C3D/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/10/2016-05-10-ReadingPaper-C3D/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -281,20 +290,24 @@ OpenCV Install ProblemsBecause of some problems, I have to install two versions 
       
 
       
-        <p>Some problems I’ve met when I was installing opencv and caffe.</p>
-<h1 id="OpenCV-Install-Problems"><a href="#OpenCV-Install-Problems" class="headerlink" title="OpenCV Install Problems"></a>OpenCV Install Problems</h1><p>Because of some problems, I have to install two versions of opencv (2.4.12 and 3.1.0, at 18 Avril 2016). But when I compile the source of opencv, I have to point out the install dir of opencv. At first, I use opencv2.4.10 and opencv 3.1.0, but when the program tries to find opencv, the dir is not correct. After changing to opencv2412 and opencv310, there is no problem any more.</p>
-<p>I just have to add </p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span>(CMAKE_PREFIX_PATH <span class="string">"/usr/local/opencv2.4"</span>)</span><br><span class="line"><span class="keyword">find_package</span>( OpenCV <span class="number">2.4</span> REQUIRED )</span><br></pre></td></tr></table></figure>
-<p>in the CMakeLists.txt.</p>
-<p>And before this, there was a problem when I compile 2.4.12. I want to compile with contrib but with 2.4.12, there is some problem with the lib dnn so I have to turn it off. No problem when compiling with 3.1.0.</p>
-<p>You haven’t put the shared library in a location where the loader can find it. look inside the /usr/local/opencv and /usr/local/opencv2 folders and see if either of them contains any shared libraries (files beginning in lib and usually ending in .so). when you find them, create a file called /etc/ld.so.conf.d/opencv.conf and write to it the paths to the folders where the libraries are stored, one per line. Then run</p>
-<p>sudo ldconfig -v<br>for example, if the libraries were stored under /usr/local/opencv/libopencv_core.so.2.4 then I would write this to my opencv.conf file:</p>
-<p>/usr/local/opencv/<br>If you can’t find the libraries, try running</p>
-<p>sudo updatedb &amp;&amp; locate libopencv_core.so.2.4<br>in a shell. You don’t need to run updatedb if you’ve rebooted since compiling OpenCV.</p>
-<h1 id="Caffe-Install-Problems"><a href="#Caffe-Install-Problems" class="headerlink" title="Caffe Install Problems"></a>Caffe Install Problems</h1><p>Following with <a href="http://caffe.berkeleyvision.org/installation.html" target="_blank" rel="external">Installation for Caffe</a>, no pb if I install opencv in the default dir. But after changing the install dir to /usr/local/opencv310, there is pb in compilation and I don’t know how to add the opencv dir in the makefile.config. I searched a little and I found the ways annoying so I use cmake instead. And with cmake (mkdir build), the directory didn’t change comparing with makefile.config.</p>
-<p><a href="https://github.com/BVLC/caffe/tree/458928a3bc1ee94e5f12bb254a5de819c449fc0a" target="_blank" rel="external">This caffe version 458928a</a> (18 Avril 2016) is compatible with cudnn v4, not v5. </p>
-<p>for pycaffe, see <a href="https://github.com/tiangolo/caffe/blob/ubuntu-tutorial-b/docs/install_apt2.md" target="_blank" rel="external">this</a> and install gfortran before installing the requirements.txt</p>
-<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">sudo</span> apt-<span class="meta">get</span> install libatlas-<span class="keyword">base-dev </span>gfortran</span><br></pre></td></tr></table></figure>
+        <p><strong>KeyWords</strong>: 3d convnet, action recognition.</p>
+<hr>
+<p><strong>Paper Author</strong>: Du Tran, Lubomir Bourdev, Rob Fergus, Lorenzo Torresani, Manohar Paluri</p>
+<p><strong>Research Institu</strong>: Facebook AI Reasearch, Dartmouth College</p>
+<p><strong>Database</strong>: UCF101, Sport1m, I380K(internal database)</p>
+<p><strong>GPU &amp; timing</strong>: </p>
+<p><strong>Paper Link</strong>: <a href="http://www.cv-foundation.org/openaccess/content_iccv_2015/html/Tran_Learning_Spatiotemporal_Features_ICCV_2015_paper.html" target="_blank" rel="external">iccv15</a></p>
+<hr>
+<h1 id="3-3D-ConvNets"><a href="#3-3D-ConvNets" class="headerlink" title="3. 3D ConvNets"></a><strong>3. 3D ConvNets</strong></h1><p>又是从第三章开始。3D convnet就不叙述了。文中把视频截断成16-frame的clips，所以input就变成了3x16x128x171。然后在随机crop成3x16x112x112的图片，可以增加数据量，但是这种数据量的增加我觉得需要打折扣，并不能完全乘以16x59这样计算。我觉得这里是讲的train from scratch on UCF101，所以用的网络比较小，5个卷积层，3个fc，2048，2048，101。batch size = 30, lr = 0.003， 4 epochs之后除以10， 总共16个epochs。</p>
+<p>然后讨论了depth应该取多少，最后好像是3最好。但是train from scratch最多到达45%的准确率（clip-based）。</p>
+<p><strong>问题1</strong><br>但是可以从图中看到，在epoch 3,4的时候，accuracy是降低的，然后过了4，又升上去了，好奇怪，正常吗?</p>
+<p>然后就开始正常的训练了，实际上作者是用的他们自己的数据库I380K训练的，这个好像是用了8个convnet，5个pooling，fc4096，4096，101。然后在这个数据库的基础上再fine-tuning。好像引用中[29]的准确律在sport1m上比C3D还要高，文中说120-frame的clips不能直接跟文中的16-frame的准确率比较。</p>
+<p>文中的准确率的图表真让人看得眼花缭乱。 Table 2里面说的C3D(trained from scratch) 44.9, 60.0, 84.4, C3D(fine-tuned from I380K pre-trained model)在单个clip上的是46.1，单个video上的是61.1，单个video@5 is 85.2。但是再第4章里有又说，</p>
+<blockquote>
+<p>C3D with 3 nets boosts the accuracy to 85.2% with the dimension is increased to 12,288.</p>
+</blockquote>
+<p>In table 3, C3D(1 net) + SVM: 82.3, C3D(3 nets) + SVM: 85.2</p>
+<p>唉，导师说我这篇文章没有仔细看明白，感觉看明白了也做不出来啊。首先因为他用了自己的数据库。然后不知道如果从sport1m入手的准确率怎么样。反正现在用ucf101，准确率最多到37，38%左右。离作者说的45%还差一截，不过我觉得差的也只是其中的一些参数的调整了。但是这个45%，是建立在training data的准确率是接近100%的，这样难道不是overfitting吗？</p>
 
       
     </div>
@@ -316,7 +329,7 @@ OpenCV Install ProblemsBecause of some problems, I have to install two versions 
       
         <div class="post-tags">
           
-            <a href="/tags/install-problems/" rel="tag">#install problems</a>
+            <a href="/tags/PaperReading/" rel="tag">#PaperReading</a>
           
         </div>
       
@@ -325,13 +338,13 @@ OpenCV Install ProblemsBecause of some problems, I have to install two versions 
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2016/05/03/2016-05-03-ReadingPaper-FCN/" rel="next" title="Fully Convolutional Networks#PaperReading#">
+                <i class="fa fa-chevron-left"></i> Fully Convolutional Networks#PaperReading#
+              </a>
+            
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/05/13/2016-04-22-ReadingPaper-Fast-RCNN/" rel="prev" title="Fast R-CNN#PaperReading#">
-                Fast R-CNN#PaperReading# <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -357,8 +370,8 @@ OpenCV Install ProblemsBecause of some problems, I have to install two versions 
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/05/13/2016-04-18-notes-of-problems-when-installing-opencv-and-caffe/"
-           data-title="Notes of problems when installing opencv and caffe" data-url="http://yoursite.com/2016/05/13/2016-04-18-notes-of-problems-when-installing-opencv-and-caffe/">
+      <div class="ds-thread" data-thread-key="2016/05/10/2016-05-10-ReadingPaper-C3D/"
+           data-title="Learning Spatiotemporal Features with 3D Convolutional Networks#PaperReading#" data-url="http://yoursite.com/2016/05/10/2016-05-10-ReadingPaper-C3D/">
       </div>
     
   </div>
@@ -442,7 +455,7 @@ OpenCV Install ProblemsBecause of some problems, I have to install two versions 
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#OpenCV-Install-Problems"><span class="nav-number">1.</span> <span class="nav-text">OpenCV Install Problems</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Caffe-Install-Problems"><span class="nav-number">2.</span> <span class="nav-text">Caffe Install Problems</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#3-3D-ConvNets"><span class="nav-number">1.</span> <span class="nav-text">3. 3D ConvNets</span></a></li></ol></div>
             
           </div>
         </section>
