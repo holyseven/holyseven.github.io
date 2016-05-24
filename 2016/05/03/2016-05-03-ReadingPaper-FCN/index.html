@@ -100,7 +100,7 @@ Paper Author: Jonathan Long, Evan Shlhamer Trevor Darrell
 Research Institu: Berkeley
 Database: VOC, NYUDv2, SIFT Flow
 GPU &amp;amp; timing: NVIDIA K40">
-<meta property="og:updated_time" content="2016-05-13T08:33:49.892Z">
+<meta property="og:updated_time" content="2016-05-24T22:56:42.273Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Fully Convolutional Networks#PaperReading#">
 <meta name="twitter:description" content="KeyWords: semantic segmentation, fully convolutional
@@ -302,13 +302,47 @@ GPU &amp;amp; timing: NVIDIA K40">
 <p><strong>Paper Link</strong>: <a href="http://www.cv-foundation.org/openaccess/content_cvpr_2015/html/Long_Fully_Convolutional_Networks_2015_CVPR_paper.html" target="_blank" rel="external">cvpr15</a></p>
 <hr>
 <a id="more"></a>
+<h1 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a><strong>Abstract</strong></h1><p>文中将卷积神经网络变成了fully convolutional，并把AlexNet，VGG，GoogleNet的训练结果转换到了fully convolutional。主要的idea是构建了一个skip architecture，可以把更深层的特征与浅层的特征结合。</p>
+<p>结果：PASCAL VOC上的结果meanIU 62.2%</p>
+<h1 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a><strong>1. Introduction</strong></h1><p>引用一句</p>
+<blockquote>
+<p>To our knowledge, this is the first work to train FCNs end-to-end (1) for pixelwise prediction and (2) from supervised pre-training.</p>
+<p>Semantic segmentation faces an inherent tension between semantics and location: global information resolves what while local information resolves where.</p>
+</blockquote>
+<h1 id="2-Related-work"><a href="#2-Related-work" class="headerlink" title="2.Related work"></a><strong>2.Related work</strong></h1><p>之前提出的可以使输入的图片尺寸不固定的文章。</p>
+<p>dense prediction with convnets…</p>
 <h1 id="3-FCN"><a href="#3-FCN" class="headerlink" title="3. FCN"></a><strong>3. FCN</strong></h1><p>直接跳到第三章来，不知道前两章在讲什么，看得我好困啊。</p>
+<p>loss function的定义是把每个像素的分类的loss加起来。作者认为与逐个像素训练是一样的，这样只是把一整张图片当作了一个mini-batch。</p>
 <p>3.1首先说了把fc-layer变成1X1的convnet，这样就可以接受不同size的image了，只是输出的尺寸是根据输入的变化而变化的。文中的有些话一直不懂：</p>
 <blockquote>
 <p>When these receptive fields overlap significantly, both feedforward computation and backpropagation are much more efficient when computed layer-by-layer over an entire image instead of independently patch-by-patch.</p>
+</blockquote>
+<p>— 5月25日加：上面这句话应该只是想说，这样做，比把像素一个一个作为样本去训练要快得多。</p>
+<blockquote>
 <p>Furthermore, while the resulting maps are equivalent to the evaluation of the original net on particular input patches, the computation is highly amortized over the overlapping regions of those patches.</p>
 </blockquote>
 <p><strong>问题1</strong>： 为什么因为receptive field overlap，计算量就会大大降低？是因为SPP-layer吗？但是代码中并没有使用这种layer啊？不懂。。</p>
+<p>— 5月25日加：我觉得这应该是作者的实验结果显示的，并没有理论上的或者结构上的支持，应该只是GPU计算的时候的优化吧。</p>
+<h2 id="3-2-不知道在说啥"><a href="#3-2-不知道在说啥" class="headerlink" title="3.2 不知道在说啥"></a><em>3.2 不知道在说啥</em></h2><h2 id="3-3-upsampling和反卷积"><a href="#3-3-upsampling和反卷积" class="headerlink" title="3.3 upsampling和反卷积"></a><em>3.3 upsampling和反卷积</em></h2><p>用bilinear interpolation来upsampling。</p>
+<p>但是最后一段说的还是用deconvolutional layers?</p>
+<h2 id="3-4-patchwise-training-is-loss-sampling"><a href="#3-4-patchwise-training-is-loss-sampling" class="headerlink" title="3.4 patchwise training is loss sampling"></a><em>3.4 patchwise training is loss sampling</em></h2><blockquote>
+<p>Whole image fully convolutional training is identical to patchwise training where each batch consists all the receptive fields of the units below the loss for an image (or collection of images).</p>
+</blockquote>
+<p>作者提出要sampling一张图片中的pixel来训练，但是之后4.3章中做的实验显示，并没有什么卵用。但是想法还是不错，我可以在训练别的数据库的时候试试，不知道caffe好不好实现。</p>
+<h1 id="4-Segmentation-Architecture"><a href="#4-Segmentation-Architecture" class="headerlink" title="4. Segmentation Architecture"></a><strong>4. Segmentation Architecture</strong></h1><blockquote>
+<p>We train with a per-pixel <strong>multinomial logistic loss</strong> …</p>
+</blockquote>
+<p>训练PASCAL的时候，将mask忽略，不带它一起训练。</p>
+<h2 id="4-2-Combining-what-and-where"><a href="#4-2-Combining-what-and-where" class="headerlink" title="4.2 Combining what and where"></a><em>4.2 Combining what and where</em></h2><p>这个网络的结构有点难说清楚。。。</p>
+<p>首先，FCN-32s，16s， 8s的意思是，skip的地方离原图大小差距32，16，8倍（高宽各差那么多倍）。当然是8s的效果最好，因为保留的位置信息最多。</p>
+<p>32s是在pool5，conv6-7之后skip的，其实就差不多已经到最后了，相当于没有跳。</p>
+<p>16s是在pool4之后跳出，比起32s，feature map的大小就会要大2倍，所以此时，32s得到的feature map就通过deconv来扩大2倍，然后跟pool4之后的fm加起来。加起来的东西应该是概率，因为最后加的直接就是21<em>H</em>W的那个fm。所以应该是概率相加。</p>
+<p>8s相似。</p>
+<p>训练过程是先训练32s，然后16s，最后8s。32s训练可以得到一张和原图一致大小的fm，但是是在倒数几层才加入deconv来把大小变回来。而训练16s的时候，先得到一个21个channels的缩小了32倍的fm（即概率），然后那层deconv只变大2倍，再和pool4后面的fm（也是21个channels，但是只缩小了16倍的）相加，即是两个概率相加。</p>
+<p>最后再训练8s，类似。</p>
+<h2 id="4-3-Experimental-framework"><a href="#4-3-Experimental-framework" class="headerlink" title="4.3 Experimental framework"></a><em>4.3 Experimental framework</em></h2><p>20张图片作为一个mini-batch？？？代码中并不是这样的啊，而且20张图片，太大了吧，GPU内存应该不够吧。</p>
+<p>从VGG-16 fine-tuning而来。fine-tuning所有layers。32s的训练花了3天？？太久了吧，我是不是哪没对。</p>
+<p>其它没什么了吧。</p>
 
       
     </div>
@@ -460,7 +494,7 @@ GPU &amp;amp; timing: NVIDIA K40">
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#3-FCN"><span class="nav-number">1.</span> <span class="nav-text">3. FCN</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Abstract"><span class="nav-number">1.</span> <span class="nav-text">Abstract</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-Introduction"><span class="nav-number">2.</span> <span class="nav-text">1. Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-Related-work"><span class="nav-number">3.</span> <span class="nav-text">2.Related work</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-FCN"><span class="nav-number">4.</span> <span class="nav-text">3. FCN</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-不知道在说啥"><span class="nav-number">4.1.</span> <span class="nav-text">3.2 不知道在说啥</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-upsampling和反卷积"><span class="nav-number">4.2.</span> <span class="nav-text">3.3 upsampling和反卷积</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-4-patchwise-training-is-loss-sampling"><span class="nav-number">4.3.</span> <span class="nav-text">3.4 patchwise training is loss sampling</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-Segmentation-Architecture"><span class="nav-number">5.</span> <span class="nav-text">4. Segmentation Architecture</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-Combining-what-and-where"><span class="nav-number">5.1.</span> <span class="nav-text">4.2 Combining what and where</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-3-Experimental-framework"><span class="nav-number">5.2.</span> <span class="nav-text">4.3 Experimental framework</span></a></li></ol></li></ol></div>
             
           </div>
         </section>
