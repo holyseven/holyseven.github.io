@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="caffe," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -84,16 +84,15 @@
 
 
 
-<meta name="description" content="重写convert_imageset">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Caffe Code Reading - Convert Image Set">
-<meta property="og:url" content="http://yoursite.com/2016/04/27/2016-04-27-caffe-code-convert-imageset/index.html">
+<meta name="description">
+<meta property="og:type" content="website">
+<meta property="og:title" content="holyseven's blog">
+<meta property="og:url" content="http://yoursite.com/archives/2016/06/index.html">
 <meta property="og:site_name" content="holyseven's blog">
-<meta property="og:description" content="重写convert_imageset">
-<meta property="og:updated_time" content="2016-05-13T08:33:30.848Z">
+<meta property="og:description">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Caffe Code Reading - Convert Image Set">
-<meta name="twitter:description" content="重写convert_imageset">
+<meta name="twitter:title" content="holyseven's blog">
+<meta name="twitter:description">
 
 
 
@@ -111,7 +110,7 @@
   };
 </script>
 
-  <title> Caffe Code Reading - Convert Image Set | holyseven's blog </title>
+  <title> 归档 | holyseven's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -132,7 +131,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left page-post-detail ">
+  <div class="container one-collumn sidebar-position-left  page-archive  ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -210,134 +209,66 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-expand">
+  <section id="posts" class="posts-collapse">
+    <span class="archive-move-on"></span>
+
+    <span class="archive-page-counter">
+      
+      
+      
+        
+      
+      嗯..! 目前共计 9 篇日志。 继续努力。
+    </span>
+
     
 
-  
-  
+      
+      
+      
 
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
+      
         
+        <div class="collection-title">
+          <h2 class="archive-year motion-element" id="archive-year-2016">2016</h2>
+        </div>
+      
+      
+
+      
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h1 class="post-title">
         
-          <h1 class="post-title" itemprop="name headline">
-            
-            
+            <a class="post-title-link" href="/2016/06/07/2016-06-07-python-notes/" itemprop="url">
               
-                Caffe Code Reading - Convert Image Set
+                <span itemprop="name">Python notes</span>
               
-            
-          </h1>
+            </a>
         
+      </h1>
 
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-04-27T10:00:00+02:00" content="2016-04-27">
-              2016-04-27
-            </time>
-          </span>
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2016-06-07T10:00:00+02:00"
+              content="2016-06-07" >
+          06-07
+        </time>
+      </div>
 
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/04/27/2016-04-27-caffe-code-convert-imageset/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/27/2016-04-27-caffe-code-convert-imageset/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <p>重写了tools/convert_imageset。还不算太难，把video里读出来的Mat用cv::merge就可以连成一个48个channels的datum了。所以这个frame的长度预先定义好了。。就这个而言的话，并不是很好。居然忘记了set_label，还好在训练开始的时候就看到了loss都直接为0了，然后发现这个问题，最后加上了，然后重新生成lmdb，还要重新拷贝到服务器上去，重新训练。</p>
-<p>然后使用了reshape layer增加了一个dimension，应该是没有把数据弄乱。</p>
-<p>两个GPU互相之间的通信应该会占用一定的内存，或者在读取数据的时候会有一定的mutex机制，所以之前数据是以单个文件存在的时候，GPU的速度也受影响。但是使用lmdb这种数据库的话，读取速度特别快，即使GPU内存很高也没有问题，两个使用率都能达到99%。</p>
-
-      
-    </div>
-
-    <div>
-      
-        
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/caffe/" rel="tag">#caffe</a>
-          
-        </div>
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2016/04/26/2016-04-26-caffe-code-reading-layer/" rel="next" title="Caffe Code Reading - blob and layer">
-                <i class="fa fa-chevron-left"></i> Caffe Code Reading - blob and layer
-              </a>
-            
-          </div>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/04/29/2016-04-29-reinstall-ubuntu/" rel="prev" title="Reinstall Ubuntu 14.04 and Teamviewer, jekyll">
-                Reinstall Ubuntu 14.04 and Teamviewer, jekyll <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
+    </header>
   </article>
 
 
 
-    <div class="post-spread">
-      
-    </div>
-  </div>
+    
+
+  </section>
+
+  
+
 
 
           </div>
@@ -345,14 +276,6 @@
 
 
           
-  <div class="comments" id="comments">
-    
-      <div class="ds-thread" data-thread-key="2016/04/27/2016-04-27-caffe-code-convert-imageset/"
-           data-title="Caffe Code Reading - Convert Image Set" data-url="http://yoursite.com/2016/04/27/2016-04-27-caffe-code-convert-imageset/">
-      </div>
-    
-  </div>
-
 
         </div>
         
@@ -372,17 +295,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel ">
+      <section class="site-overview sidebar-panel  sidebar-panel-active ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -425,17 +339,6 @@
 
       </section>
 
-      
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-            
-              
-            
-            
-              <p class="post-toc-empty">此文章未包含目录</p>
-            
-          </div>
-        </section>
       
 
     </div>
@@ -532,9 +435,11 @@
   
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
-
+  
+    <script type="text/javascript" id="motion.page.archive">
+      $('.archive-year').velocity('transition.slideLeftIn');
+    </script>
+  
 
 
   

@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="caffe," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -84,16 +84,16 @@
 
 
 
-<meta name="description" content="重写convert_imageset">
+<meta name="description" content="Some python codes explaination…">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Caffe Code Reading - Convert Image Set">
-<meta property="og:url" content="http://yoursite.com/2016/04/27/2016-04-27-caffe-code-convert-imageset/index.html">
+<meta property="og:title" content="Python notes">
+<meta property="og:url" content="http://yoursite.com/2016/06/07/2016-06-07-python-notes/index.html">
 <meta property="og:site_name" content="holyseven's blog">
-<meta property="og:description" content="重写convert_imageset">
-<meta property="og:updated_time" content="2016-05-13T08:33:30.848Z">
+<meta property="og:description" content="Some python codes explaination…">
+<meta property="og:updated_time" content="2016-06-07T13:08:58.601Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Caffe Code Reading - Convert Image Set">
-<meta name="twitter:description" content="重写convert_imageset">
+<meta name="twitter:title" content="Python notes">
+<meta name="twitter:description" content="Some python codes explaination…">
 
 
 
@@ -111,7 +111,7 @@
   };
 </script>
 
-  <title> Caffe Code Reading - Convert Image Set | holyseven's blog </title>
+  <title> Python notes | holyseven's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -231,7 +231,7 @@
             
             
               
-                Caffe Code Reading - Convert Image Set
+                Python notes
               
             
           </h1>
@@ -243,8 +243,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-04-27T10:00:00+02:00" content="2016-04-27">
-              2016-04-27
+            <time itemprop="dateCreated" datetime="2016-06-07T10:00:00+02:00" content="2016-06-07">
+              2016-06-07
             </time>
           </span>
 
@@ -254,8 +254,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/04/27/2016-04-27-caffe-code-convert-imageset/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/27/2016-04-27-caffe-code-convert-imageset/" itemprop="commentsCount"></span>
+                <a href="/2016/06/07/2016-06-07-python-notes/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/07/2016-06-07-python-notes/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -278,9 +278,9 @@
       
 
       
-        <p>重写了tools/convert_imageset。还不算太难，把video里读出来的Mat用cv::merge就可以连成一个48个channels的datum了。所以这个frame的长度预先定义好了。。就这个而言的话，并不是很好。居然忘记了set_label，还好在训练开始的时候就看到了loss都直接为0了，然后发现这个问题，最后加上了，然后重新生成lmdb，还要重新拷贝到服务器上去，重新训练。</p>
-<p>然后使用了reshape layer增加了一个dimension，应该是没有把数据弄乱。</p>
-<p>两个GPU互相之间的通信应该会占用一定的内存，或者在读取数据的时候会有一定的mutex机制，所以之前数据是以单个文件存在的时候，GPU的速度也受影响。但是使用lmdb这种数据库的话，读取速度特别快，即使GPU内存很高也没有问题，两个使用率都能达到99%。</p>
+        <p>Some python codes explaination…</p>
+<a id="more"></a>
+<h1 id="PIL-Image"><a href="#PIL-Image" class="headerlink" title="PIL.Image"></a>PIL.Image</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="comment"># Image Reading</span></span><br><span class="line">im = Image.open(<span class="string">'aachen_000012_000019_leftImg8bit.png'</span>, <span class="string">'RGB'</span>)</span><br><span class="line"><span class="comment">#  im = Image.open('aachen_000012_000019_leftImg8bit.png', 'L') # grey</span></span><br><span class="line">im.size <span class="comment"># (2048, 1024)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Image to array</span></span><br><span class="line"><span class="comment"># in_ = np.array(im, dtype=np.float32)</span></span><br><span class="line">in_ = np.array(im, dtype=np.uint8) </span><br><span class="line">in_.shape <span class="comment"># (1024, 2048, 3), (row, col, channel)</span></span><br><span class="line">in_ = in_[:,:,::<span class="number">-1</span>] <span class="comment"># RGB convert to BGR, caffe needs BGR </span></span><br><span class="line">                    <span class="comment"># but PIL.Image reads images as RGB.</span></span><br><span class="line">                    <span class="comment"># opencv reads images as BGR, too.</span></span><br><span class="line"></span><br><span class="line">in_ = in_.transpose((<span class="number">2</span>,<span class="number">0</span>,<span class="number">1</span>))</span><br><span class="line">in_.shape <span class="comment"># (3, 1024, 2048), (channel, row, col), </span></span><br><span class="line">          <span class="comment"># Caffe reads data offset: (channel*Row + row)*Col + col</span></span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="comment"># array to Image</span></span><br><span class="line">cimg = Image.fromarray(color_image, <span class="string">'RGB'</span>)</span><br><span class="line">cimg.show()</span><br><span class="line">cimg.save(<span class="string">'test_color.png'</span>)</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -300,28 +300,18 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/caffe/" rel="tag">#caffe</a>
-          
-        </div>
-      
 
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/04/26/2016-04-26-caffe-code-reading-layer/" rel="next" title="Caffe Code Reading - blob and layer">
-                <i class="fa fa-chevron-left"></i> Caffe Code Reading - blob and layer
+              <a href="/2016/05/10/2016-05-10-ReadingPaper-C3D/" rel="next" title="Learning Spatiotemporal Features with 3D Convolutional Networks#PaperReading#">
+                <i class="fa fa-chevron-left"></i> Learning Spatiotemporal Features with 3D Convolutional Networks#PaperReading#
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/04/29/2016-04-29-reinstall-ubuntu/" rel="prev" title="Reinstall Ubuntu 14.04 and Teamviewer, jekyll">
-                Reinstall Ubuntu 14.04 and Teamviewer, jekyll <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -347,8 +337,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/04/27/2016-04-27-caffe-code-convert-imageset/"
-           data-title="Caffe Code Reading - Convert Image Set" data-url="http://yoursite.com/2016/04/27/2016-04-27-caffe-code-convert-imageset/">
+      <div class="ds-thread" data-thread-key="2016/06/07/2016-06-07-python-notes/"
+           data-title="Python notes" data-url="http://yoursite.com/2016/06/07/2016-06-07-python-notes/">
       </div>
     
   </div>
@@ -432,7 +422,7 @@
               
             
             
-              <p class="post-toc-empty">此文章未包含目录</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#PIL-Image"><span class="nav-number">1.</span> <span class="nav-text">PIL.Image</span></a></li></ol></div>
             
           </div>
         </section>
