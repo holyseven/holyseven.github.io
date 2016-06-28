@@ -1,0 +1,588 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="caffe," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="Caffe Code Reading may be combined into one file.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Caffe Code Reading - softmax with loss">
+<meta property="og:url" content="http://yoursite.com/2016/06/28/2016-06-28-caffe-code-reading-softmax-with-loss/index.html">
+<meta property="og:site_name" content="holyseven's blog">
+<meta property="og:description" content="Caffe Code Reading may be combined into one file.">
+<meta property="og:updated_time" content="2016-06-28T21:12:26.710Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Caffe Code Reading - softmax with loss">
+<meta name="twitter:description" content="Caffe Code Reading may be combined into one file.">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> Caffe Code Reading - softmax with loss | holyseven's blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">holyseven's blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Caffe Code Reading - softmax with loss
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-06-28T11:00:00+02:00" content="2016-06-28">
+              2016-06-28
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/06/28/2016-06-28-caffe-code-reading-softmax-with-loss/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/28/2016-06-28-caffe-code-reading-softmax-with-loss/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Caffe Code Reading may be combined into one file.</p>
+<a id="more"></a>
+<hr>
+<h1 id="softmax-loss-layer-cpp"><a href="#softmax-loss-layer-cpp" class="headerlink" title="softmax_loss_layer.cpp"></a>softmax_loss_layer.cpp</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> Dtype&gt;</span><br><span class="line"><span class="keyword">void</span> SoftmaxWithLossLayer&lt;Dtype&gt;::Forward_cpu(</span><br><span class="line">    <span class="keyword">const</span> <span class="built_in">vector</span>&lt;Blob&lt;Dtype&gt;*&gt;&amp; bottom, <span class="keyword">const</span> <span class="built_in">vector</span>&lt;Blob&lt;Dtype&gt;*&gt;&amp; top) &#123;</span><br><span class="line">  <span class="comment">// The forward pass computes the softmax prob_ values.</span></span><br><span class="line">  softmax_layer_-&gt;Forward(softmax_bottom_vec_, softmax_top_vec_);<span class="comment">//this will compute prob_</span></span><br><span class="line">  <span class="keyword">const</span> Dtype* prob_data = prob_.cpu_data();<span class="comment">//Bx34(x1)xHxW</span></span><br><span class="line">  <span class="keyword">const</span> Dtype* label = bottom[<span class="number">1</span>]-&gt;cpu_data();<span class="comment">//Bx1(x1)xHxW</span></span><br><span class="line">  <span class="keyword">int</span> dim = prob_.count() / outer_num_;<span class="comment">//HxW</span></span><br><span class="line">  <span class="comment">//softmax_axis_ [default = 1]</span></span><br><span class="line">  <span class="comment">//outer_num_ = bottom[0]-&gt;count(0, softmax_axis_);// it doesn't count the softmax_axis_ (axis index: 1, it's the number fof classes: 34)</span></span><br><span class="line">  <span class="comment">//inner_num_ = bottom[0]-&gt;count(softmax_axis_ + 1);// it counts from softmax_axis_+1</span></span><br><span class="line">  <span class="comment">//outer_num_ = B</span></span><br><span class="line">  <span class="comment">//inner_num_ = (x1)xHxW</span></span><br><span class="line">  <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">  Dtype loss = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; outer_num_; ++i) &#123;<span class="comment">//for each batch_size</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; inner_num_; j++) &#123;<span class="comment">//for each pixel</span></span><br><span class="line">      <span class="keyword">const</span> <span class="keyword">int</span> label_value = <span class="keyword">static_cast</span>&lt;<span class="keyword">int</span>&gt;(label[i * inner_num_ + j]);</span><br><span class="line">      <span class="keyword">if</span> (has_ignore_label_ &amp;&amp; label_value == ignore_label_) &#123;</span><br><span class="line">        <span class="keyword">continue</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      DCHECK_GE(label_value, <span class="number">0</span>);</span><br><span class="line">      DCHECK_LT(label_value, prob_.shape(softmax_axis_));</span><br><span class="line">      <span class="comment">//cross entropy</span></span><br><span class="line">      <span class="comment">//add all loss in those positions.</span></span><br><span class="line">      loss -= <span class="built_in">log</span>(std::max(prob_data[i * dim <span class="comment">//each batch</span></span><br><span class="line">                  + label_value * inner_num_ <span class="comment">//just the label_value index is not 0</span></span><br><span class="line">                  + j], <span class="comment">// each pixel</span></span><br><span class="line">                           Dtype(FLT_MIN)));</span><br><span class="line">      ++count;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  top[<span class="number">0</span>]-&gt;mutable_cpu_data()[<span class="number">0</span>] = loss / get_normalizer(normalization_, count); <span class="comment">// if not normalization_, the denominator is 1.</span></span><br><span class="line">  <span class="keyword">if</span> (top.size() == <span class="number">2</span>) &#123;</span><br><span class="line">    top[<span class="number">1</span>]-&gt;ShareData(prob_);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> Dtype&gt;</span><br><span class="line"><span class="keyword">void</span> SoftmaxWithLossLayer&lt;Dtype&gt;::Backward_cpu(<span class="keyword">const</span> <span class="built_in">vector</span>&lt;Blob&lt;Dtype&gt;*&gt;&amp; top,</span><br><span class="line">    <span class="keyword">const</span> <span class="built_in">vector</span>&lt;<span class="keyword">bool</span>&gt;&amp; propagate_down, <span class="keyword">const</span> <span class="built_in">vector</span>&lt;Blob&lt;Dtype&gt;*&gt;&amp; bottom) &#123;</span><br><span class="line">  <span class="keyword">if</span> (propagate_down[<span class="number">1</span>]) &#123;</span><br><span class="line">    LOG(FATAL) &lt;&lt; <span class="keyword">this</span>-&gt;type()</span><br><span class="line">               &lt;&lt; <span class="string">" Layer cannot backpropagate to label inputs."</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (propagate_down[<span class="number">0</span>]) &#123;</span><br><span class="line">    Dtype* bottom_diff = bottom[<span class="number">0</span>]-&gt;mutable_cpu_diff();</span><br><span class="line">    <span class="keyword">const</span> Dtype* prob_data = prob_.cpu_data();</span><br><span class="line">    caffe_copy(prob_.count(), prob_data, bottom_diff);</span><br><span class="line">    <span class="keyword">const</span> Dtype* label = bottom[<span class="number">1</span>]-&gt;cpu_data();</span><br><span class="line">    <span class="keyword">int</span> dim = prob_.count() / outer_num_;</span><br><span class="line">    <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; outer_num_; ++i) &#123;</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; inner_num_; ++j) &#123;</span><br><span class="line">        <span class="keyword">const</span> <span class="keyword">int</span> label_value = <span class="keyword">static_cast</span>&lt;<span class="keyword">int</span>&gt;(label[i * inner_num_ + j]);</span><br><span class="line">        <span class="keyword">if</span> (has_ignore_label_ &amp;&amp; label_value == ignore_label_) &#123;</span><br><span class="line">          <span class="keyword">for</span> (<span class="keyword">int</span> c = <span class="number">0</span>; c &lt; bottom[<span class="number">0</span>]-&gt;shape(softmax_axis_); ++c) &#123;</span><br><span class="line">            bottom_diff[i * dim + c * inner_num_ + j] = <span class="number">0</span>;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          <span class="comment">//backpropagation: softmax with loss is 1-y_i.</span></span><br><span class="line">          bottom_diff[i * dim + label_value * inner_num_ + j] -= <span class="number">1</span>;</span><br><span class="line">          ++count;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// Scale gradient</span></span><br><span class="line">    Dtype loss_weight = top[<span class="number">0</span>]-&gt;cpu_diff()[<span class="number">0</span>] /</span><br><span class="line">                        get_normalizer(normalization_, count);</span><br><span class="line">    caffe_scal(prob_.count(), loss_weight, bottom_diff);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>$$1-y_i$$</p>
+<p>$\omega$</p>
+<p>The processus for adding a new layer, see <a href="https://github.com/BVLC/caffe/wiki/Development#developing-new-layers" target="_blank" rel="external">here</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/caffe/" rel="tag">#caffe</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/06/28/2016-06-28-experiments-crop-c3d-cityscape/" rel="next" title="Experiments of Cropped-Image-C3D-Cityscape">
+                <i class="fa fa-chevron-left"></i> Experiments of Cropped-Image-C3D-Cityscape
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/06/28/2016-06-28-pycaffe-coding/" rel="prev" title="PyCaffe Coding">
+                PyCaffe Coding <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/06/28/2016-06-28-caffe-code-reading-softmax-with-loss/"
+           data-title="Caffe Code Reading - softmax with loss" data-url="http://yoursite.com/2016/06/28/2016-06-28-caffe-code-reading-softmax-with-loss/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="holyseven" />
+          <p class="site-author-name" itemprop="name">holyseven</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">13</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#softmax-loss-layer-cpp"><span class="nav-number">1.</span> <span class="nav-text">softmax_loss_layer.cpp</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">holyseven</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"holyseven"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>

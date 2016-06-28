@@ -1,0 +1,589 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="caffe," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="PyCaffe Coding, only this one post records coding about pycaffe.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PyCaffe Coding">
+<meta property="og:url" content="http://yoursite.com/2016/06/28/2016-06-28-pycaffe-coding/index.html">
+<meta property="og:site_name" content="holyseven's blog">
+<meta property="og:description" content="PyCaffe Coding, only this one post records coding about pycaffe.">
+<meta property="og:updated_time" content="2016-06-28T21:30:35.458Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PyCaffe Coding">
+<meta name="twitter:description" content="PyCaffe Coding, only this one post records coding about pycaffe.">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> PyCaffe Coding | holyseven's blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">holyseven's blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                PyCaffe Coding
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-06-28T12:00:00+02:00" content="2016-06-28">
+              2016-06-28
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/06/28/2016-06-28-pycaffe-coding/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/28/2016-06-28-pycaffe-coding/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>PyCaffe Coding, only this one post records coding about pycaffe.</p>
+<a id="more"></a>
+<hr>
+<h1 id="Checking-learnable-parameters"><a href="#Checking-learnable-parameters" class="headerlink" title="Checking learnable parameters"></a>Checking learnable parameters</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># first get solver</span></span><br><span class="line">weights = <span class="string">'./c3d_ucf101_fcn.caffemodel'</span></span><br><span class="line">solver = caffe.SGDSolver(<span class="string">'solver.prototxt'</span>)</span><br><span class="line">solver.net.copy_from(weights)</span><br><span class="line"></span><br><span class="line"><span class="comment"># get params' names</span></span><br><span class="line">keys = solver.net.params.keys()</span><br><span class="line"></span><br><span class="line"><span class="comment"># checking...</span></span><br><span class="line">a = sovler.net.params[keys[<span class="number">0</span>]][<span class="number">0</span>].data <span class="comment"># this is a numpy array, </span></span><br><span class="line"><span class="keyword">print</span> a.shape</span><br></pre></td></tr></table></figure>
+<h1 id="Read-C3D-caffe-model-of-old-version"><a href="#Read-C3D-caffe-model-of-old-version" class="headerlink" title="Read C3D caffe model of old version"></a>Read C3D caffe model of old version</h1><ol>
+<li>compile <a href="https://github.com/facebook/C3D" target="_blank" rel="external">C3D</a>.</li>
+<li>write a cpp file in tools/ to read model’s parameters. Here, we need the train.prototxt of old version. cpp file is followed.</li>
+<li>save those parameters in a .txt file.</li>
+<li>Use new version’s pycaffe to generate the ‘net’. Here we need the train.prototxt of new version, which is written by myself.</li>
+<li>Read the .txt file and copy the numeric numbers into the ‘net’, the python script is followed.</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cuda_runtime.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdlib&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="string">"caffe/caffe.hpp"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fstream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdlib&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> caffe;  <span class="comment">// NOLINT(build/namespaces)</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>** argv)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  Caffe::set_phase(Caffe::TEST);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  Net&lt;<span class="keyword">float</span>&gt; caffe_test_net(argv[<span class="number">1</span>]);</span><br><span class="line">  caffe_test_net.CopyTrainedLayersFrom(argv[<span class="number">2</span>]);</span><br><span class="line">  <span class="keyword">int</span> num1 = atoi(argv[<span class="number">3</span>]);</span><br><span class="line">  <span class="keyword">int</span> num2 = atoi(argv[<span class="number">4</span>]);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; names = caffe_test_net.layer_names();</span><br><span class="line">  <span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; names[<span class="number">0</span>] &lt;&lt; <span class="string">","</span> &lt;&lt; names[<span class="number">2</span>] &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="built_in">vector</span>&lt;<span class="built_in">shared_ptr</span>&lt;Blob&lt;<span class="keyword">float</span>&gt; &gt; &gt; params = caffe_test_net.params();</span><br><span class="line"></span><br><span class="line">  ofstream ofs;</span><br><span class="line">  ofs.open(<span class="string">"conv3d.txt"</span>, ofstream::out);</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = num1; i &lt; num2; i++)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">int</span> N = params[i]-&gt;num();</span><br><span class="line">    <span class="keyword">int</span> C = params[i]-&gt;channels();</span><br><span class="line">    <span class="keyword">int</span> L = params[i]-&gt;length();</span><br><span class="line">    <span class="keyword">int</span> H = params[i]-&gt;height();</span><br><span class="line">    <span class="keyword">int</span> W = params[i]-&gt;width();</span><br><span class="line"></span><br><span class="line">    ofs &lt;&lt;   N  &lt;&lt; <span class="string">" "</span> &lt;&lt; C &lt;&lt; <span class="string">" "</span> &lt;&lt; L &lt;&lt; <span class="string">" "</span> &lt;&lt; H &lt;&lt; <span class="string">" "</span> &lt;&lt; W &lt;&lt; <span class="string">" "</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt;   N  &lt;&lt; <span class="string">" "</span> &lt;&lt; C &lt;&lt; <span class="string">" "</span> &lt;&lt; L &lt;&lt; <span class="string">" "</span> &lt;&lt; H &lt;&lt; <span class="string">" "</span> &lt;&lt; W &lt;&lt; <span class="string">" "</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> n = <span class="number">0</span>; n &lt; N; n++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> c = <span class="number">0</span>; c&lt; C; c++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> l = <span class="number">0</span>; l &lt; L; l++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> h = <span class="number">0</span>; h &lt; H; h++)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">for</span> (<span class="keyword">int</span> w = <span class="number">0</span>; w &lt; W; w++)</span><br><span class="line">                    &#123;</span><br><span class="line">                        ofs &lt;&lt; params[i]-&gt;data_at(n, c, l, h, w) &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                </span><br><span class="line">                &#125;</span><br><span class="line">            </span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ofs &lt;&lt; <span class="string">"\n"</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; i &lt;&lt;  <span class="string">": "</span> &lt;&lt;   N  &lt;&lt; <span class="string">" "</span> &lt;&lt; C &lt;&lt; <span class="string">" "</span> &lt;&lt; L &lt;&lt; <span class="string">" "</span> &lt;&lt; H &lt;&lt; <span class="string">" "</span> &lt;&lt; W &lt;&lt; <span class="string">" "</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  ofs.close();</span><br><span class="line">  return <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> caffe</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">solver = caffe.SGDSolver(<span class="string">'solver.prototxt'</span>)</span><br><span class="line">net = solver.net</span><br><span class="line">keys = net.params.keys()</span><br><span class="line"></span><br><span class="line">conv3d = open(<span class="string">'ucf101_c3d.txt'</span>, <span class="string">'r'</span>).read().splitlines()</span><br><span class="line"></span><br><span class="line">line = <span class="number">1</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> key <span class="keyword">in</span> keys:</span><br><span class="line">    <span class="keyword">print</span> <span class="string">" -------------------------"</span> + key +  <span class="string">"-----------------------------"</span></span><br><span class="line"></span><br><span class="line">    values = conv3d[line].split()</span><br><span class="line"></span><br><span class="line">    bias = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    shape = net.params[key][bias].data.shape</span><br><span class="line"></span><br><span class="line">    <span class="comment"># special layer 1 and its bias</span></span><br><span class="line">    <span class="keyword">if</span> line == <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">print</span> <span class="string">"new net shape: "</span></span><br><span class="line">        <span class="keyword">print</span> shape</span><br><span class="line">        N,C,L,H,W = shape</span><br><span class="line">        C = <span class="number">3</span></span><br><span class="line">        L = <span class="number">3</span></span><br><span class="line">        <span class="keyword">print</span> <span class="string">"change to : "</span></span><br><span class="line">        <span class="keyword">print</span> N,C,L,H,W</span><br><span class="line"></span><br><span class="line">        data_blob = np.zeros((N,C,L,H,W), np.float)</span><br><span class="line">        <span class="keyword">print</span> <span class="string">"net param count: "</span></span><br><span class="line">        <span class="keyword">print</span> len(values)</span><br><span class="line">    </span><br><span class="line">        <span class="comment"># values copy to data_blob</span></span><br><span class="line">        v = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> n <span class="keyword">in</span> range(N):</span><br><span class="line">           <span class="keyword">for</span> c <span class="keyword">in</span> range(C):</span><br><span class="line">               <span class="keyword">for</span> l <span class="keyword">in</span> range(L):</span><br><span class="line">                   <span class="keyword">for</span> h <span class="keyword">in</span> range(H):</span><br><span class="line">                       <span class="keyword">for</span> w <span class="keyword">in</span> range(W):</span><br><span class="line">                            data_blob[n, c, l, h, w] = float(values[v])</span><br><span class="line">                            v = v + <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> n <span class="keyword">in</span> range(N):</span><br><span class="line">            <span class="keyword">for</span> c <span class="keyword">in</span> range(C):</span><br><span class="line">                <span class="keyword">for</span> l <span class="keyword">in</span> range(L):</span><br><span class="line">                    <span class="keyword">for</span> h <span class="keyword">in</span> range(H):</span><br><span class="line">                        <span class="keyword">for</span> w <span class="keyword">in</span> range(W):</span><br><span class="line">                            net.params[key][bias].data[n, <span class="number">0</span>, l*<span class="number">3</span>+c, h, w] = data_blob[n, c, l, h, w]</span><br><span class="line"></span><br><span class="line">        line = line + <span class="number">2</span></span><br><span class="line"></span><br><span class="line">        shape = net.params[key][bias].data.shape</span><br><span class="line">     </span><br><span class="line">        values = conv3d[line].split()</span><br><span class="line">    </span><br><span class="line">        bias = <span class="number">1</span></span><br><span class="line">        <span class="keyword">print</span> <span class="string">"new net shape bias: "</span></span><br><span class="line">        <span class="keyword">print</span> net.params[key][bias].data.shape</span><br><span class="line">    </span><br><span class="line">        <span class="keyword">print</span> <span class="string">"old net shape bias: "</span></span><br><span class="line">        <span class="keyword">print</span> N</span><br><span class="line">    </span><br><span class="line">        <span class="keyword">print</span> <span class="string">"old net param count bias: "</span></span><br><span class="line">        <span class="keyword">print</span> len(values)</span><br><span class="line">    </span><br><span class="line">        <span class="comment"># values copy to data_blob</span></span><br><span class="line">        v = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> n <span class="keyword">in</span> range(N):                       </span><br><span class="line">            net.params[key][bias].data[n] = float(values[v])</span><br><span class="line">            v = v + <span class="number">1</span></span><br><span class="line">    </span><br><span class="line">        line = line + <span class="number">2</span></span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">print</span> <span class="string">"new net shape: "</span></span><br><span class="line">    <span class="keyword">print</span> shape</span><br><span class="line">    <span class="keyword">print</span> <span class="string">"new net param count: "</span></span><br><span class="line"></span><br><span class="line">    count = <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(shape)):</span><br><span class="line">        count = count * shape[i]</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">print</span> count</span><br><span class="line"></span><br><span class="line">    <span class="keyword">print</span> <span class="string">"old net param count: "</span></span><br><span class="line">    <span class="keyword">print</span> len(values)</span><br><span class="line"></span><br><span class="line">    flat_data_blob = np.zeros(count, np.float)</span><br><span class="line">    v = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> value <span class="keyword">in</span> values:</span><br><span class="line">        flat_data_blob[v] = float(value)</span><br><span class="line">        v = v + <span class="number">1</span></span><br><span class="line">    </span><br><span class="line">    net.params[key][bias].data.flat = flat_data_blob.flat</span><br><span class="line"></span><br><span class="line">    <span class="comment"># bias</span></span><br><span class="line">    line = line + <span class="number">2</span></span><br><span class="line"></span><br><span class="line">    values = conv3d[line].split()</span><br><span class="line">    bias = <span class="number">1</span></span><br><span class="line">    shape = net.params[key][bias].data.shape</span><br><span class="line">    <span class="keyword">print</span> <span class="string">"new net shape bias: "</span></span><br><span class="line">    <span class="keyword">print</span> shape</span><br><span class="line">    <span class="keyword">print</span> <span class="string">"new net param count: "</span></span><br><span class="line"></span><br><span class="line">    count = <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(shape)):</span><br><span class="line">        count = count * shape[i]</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">print</span> count</span><br><span class="line"></span><br><span class="line">    <span class="keyword">print</span> <span class="string">"old net param bias count: "</span></span><br><span class="line">    <span class="keyword">print</span> len(values)</span><br><span class="line"></span><br><span class="line">    flat_data_blob = np.zeros(count, np.float)</span><br><span class="line">    v = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> value <span class="keyword">in</span> values:</span><br><span class="line">        flat_data_blob[v] = float(value)</span><br><span class="line">        v = v + <span class="number">1</span></span><br><span class="line">    </span><br><span class="line">    net.params[key][bias].data.flat = flat_data_blob.flat</span><br><span class="line"></span><br><span class="line">    line = line + <span class="number">2</span></span><br><span class="line"></span><br><span class="line">net.save(<span class="string">'1.caffemodel'</span>)</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/caffe/" rel="tag">#caffe</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/06/28/2016-06-28-caffe-code-reading-softmax-with-loss/" rel="next" title="Caffe Code Reading - softmax with loss">
+                <i class="fa fa-chevron-left"></i> Caffe Code Reading - softmax with loss
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/06/28/2016-06-28-pycaffe-coding/"
+           data-title="PyCaffe Coding" data-url="http://yoursite.com/2016/06/28/2016-06-28-pycaffe-coding/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="holyseven" />
+          <p class="site-author-name" itemprop="name">holyseven</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">13</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Checking-learnable-parameters"><span class="nav-number">1.</span> <span class="nav-text">Checking learnable parameters</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Read-C3D-caffe-model-of-old-version"><span class="nav-number">2.</span> <span class="nav-text">Read C3D caffe model of old version</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">holyseven</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"holyseven"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -90,7 +90,7 @@
 <meta property="og:url" content="http://yoursite.com/2016/04/29/2016-04-29-reinstall-ubuntu/index.html">
 <meta property="og:site_name" content="holyseven's blog">
 <meta property="og:description" content="No idea why all are removed by a command, including ubuntu-desktop etc.">
-<meta property="og:updated_time" content="2016-05-13T08:33:42.000Z">
+<meta property="og:updated_time" content="2016-06-16T21:39:54.679Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Reinstall Ubuntu 14.04 and Teamviewer, jekyll">
 <meta name="twitter:description" content="No idea why all are removed by a command, including ubuntu-desktop etc.">
@@ -283,6 +283,8 @@
 <hr>
 <h1 id="Install-Ubuntu14-04-and-all"><a href="#Install-Ubuntu14-04-and-all" class="headerlink" title="Install Ubuntu14.04 and all"></a>Install Ubuntu14.04 and all</h1><p>So reinstall ubuntu14.04 from scratch and configure all. For avoiding this situation next time, I’ve noted some installation in my <a href="https://github.com/holyseven/configuration_files/blob/master/run.sh" target="_blank" rel="external">git</a>. Luckily, I have copied the modified caffe in another disk.</p>
 <p>Nothing difficult and strange I’ve met. So just following these steps. Maybe there is something about backup but I don’t want to test it any more. Hope I will never touch these.</p>
+<p>— 20160615 added<br>Finally found the reason why those errors occurs. Although they do no damagein my computer…<br><figure class="highlight vhdl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Errors were encountered <span class="keyword">while</span> processing:</span><br><span class="line"> linux-image-extra-<span class="number">4.2</span>.<span class="number">0</span>-<span class="number">36</span>-<span class="keyword">generic</span></span><br><span class="line"> linux-image-<span class="keyword">generic</span>-lts-wily</span><br><span class="line"> linux-<span class="keyword">generic</span>-lts-wily</span><br><span class="line">E: Sub-<span class="keyword">process</span> /usr/bin/dpkg returned an error code (<span class="number">1</span>)</span><br></pre></td></tr></table></figure></p>
+<p>It’s because /boot has no enough space. There are two versions of linux-image-extra-4.2.0-36-generic, each of them has 20M+, but my /boot has only 90M in total. I remove the before one and then, no errors.<br>— 20160615 added</p>
 <hr>
 <h1 id="Teamviewer"><a href="#Teamviewer" class="headerlink" title="Teamviewer"></a>Teamviewer</h1><p>It’s about the remote access from distance, like a functinality in qq. Just download a quicksupport <a href="http://www.teamviewer.com/en/download/previous-versions/#version11" target="_blank" rel="external">here</a> in a computer which you want to control.</p>
 <p>And download a teamviewer deb (32 or 64 is not important, I think. My computer is 64-bit but I’m using the 32-bit version). Install it by </p>
@@ -412,7 +414,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">10</span>
+              <span class="site-state-item-count">13</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -422,7 +424,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

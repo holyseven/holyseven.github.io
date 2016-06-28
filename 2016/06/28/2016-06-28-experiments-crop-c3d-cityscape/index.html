@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Experiments," />
 
 
 
@@ -84,16 +84,16 @@
 
 
 
-<meta name="description" content="Some python codes explaination…">
+<meta name="description" content="C3D on Cityscape, 16 frames…">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Python notes">
-<meta property="og:url" content="http://yoursite.com/2016/06/07/2016-06-07-python-notes/index.html">
+<meta property="og:title" content="Experiments of Cropped-Image-C3D-Cityscape">
+<meta property="og:url" content="http://yoursite.com/2016/06/28/2016-06-28-experiments-crop-c3d-cityscape/index.html">
 <meta property="og:site_name" content="holyseven's blog">
-<meta property="og:description" content="Some python codes explaination…">
-<meta property="og:updated_time" content="2016-06-14T15:38:47.676Z">
+<meta property="og:description" content="C3D on Cityscape, 16 frames…">
+<meta property="og:updated_time" content="2016-06-28T20:52:57.698Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Python notes">
-<meta name="twitter:description" content="Some python codes explaination…">
+<meta name="twitter:title" content="Experiments of Cropped-Image-C3D-Cityscape">
+<meta name="twitter:description" content="C3D on Cityscape, 16 frames…">
 
 
 
@@ -111,7 +111,7 @@
   };
 </script>
 
-  <title> Python notes | holyseven's blog </title>
+  <title> Experiments of Cropped-Image-C3D-Cityscape | holyseven's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -231,7 +231,7 @@
             
             
               
-                Python notes
+                Experiments of Cropped-Image-C3D-Cityscape
               
             
           </h1>
@@ -243,8 +243,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-06-07T10:00:00+02:00" content="2016-06-07">
-              2016-06-07
+            <time itemprop="dateCreated" datetime="2016-06-28T10:00:00+02:00" content="2016-06-28">
+              2016-06-28
             </time>
           </span>
 
@@ -254,8 +254,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/06/07/2016-06-07-python-notes/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/07/2016-06-07-python-notes/" itemprop="commentsCount"></span>
+                <a href="/2016/06/28/2016-06-28-experiments-crop-c3d-cityscape/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/28/2016-06-28-experiments-crop-c3d-cityscape/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -278,11 +278,28 @@
       
 
       
-        <p>Some python codes explaination…</p>
+        <p>C3D on Cityscape, 16 frames…</p>
 <a id="more"></a>
-<h1 id="PIL-Image"><a href="#PIL-Image" class="headerlink" title="PIL.Image"></a>PIL.Image</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="comment"># Image Reading</span></span><br><span class="line">im = Image.open(<span class="string">'aachen_000012_000019_leftImg8bit.png'</span>, <span class="string">'RGB'</span>)</span><br><span class="line"><span class="comment">#  im = Image.open('aachen_000012_000019_leftImg8bit.png', 'L') # grey</span></span><br><span class="line">im.size <span class="comment"># (2048, 1024)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Image to array</span></span><br><span class="line"><span class="comment"># in_ = np.array(im, dtype=np.float32)</span></span><br><span class="line">in_ = np.array(im, dtype=np.uint8) </span><br><span class="line">in_.shape <span class="comment"># (1024, 2048, 3), (row, col, channel)</span></span><br><span class="line">in_ = in_[:,:,::<span class="number">-1</span>] <span class="comment"># RGB convert to BGR, caffe needs BGR </span></span><br><span class="line">                    <span class="comment"># but PIL.Image reads images as RGB.</span></span><br><span class="line">                    <span class="comment"># opencv reads images as BGR, too.</span></span><br><span class="line"></span><br><span class="line">in_ = in_.transpose((<span class="number">2</span>,<span class="number">0</span>,<span class="number">1</span>))</span><br><span class="line">in_.shape <span class="comment"># (3, 1024, 2048), (channel, row, col), </span></span><br><span class="line">          <span class="comment"># Caffe reads data offset: (channel*Row + row)*Col + col</span></span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="comment"># array to Image</span></span><br><span class="line">cimg = Image.fromarray(color_image, <span class="string">'RGB'</span>)</span><br><span class="line">cimg.show()</span><br><span class="line">cimg.save(<span class="string">'test_color.png'</span>)</span><br></pre></td></tr></table></figure>
-<h1 id="os"><a href="#os" class="headerlink" title="os"></a>os</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line">datalist = open(<span class="string">'sports0_test.txt'</span>, <span class="string">'r'</span>).read().splitlines()</span><br><span class="line">video_address = [<span class="keyword">None</span>]*len(datalist)</span><br><span class="line">label_list = [<span class="keyword">None</span>]*len(datalist)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(len(datalist)):</span><br><span class="line">    video_address[i] = datalist[i].split(<span class="string">' '</span>)[<span class="number">0</span>]</span><br><span class="line">    label_list[i] = datalist[i].split(<span class="string">' '</span>)[<span class="number">1</span>]</span><br><span class="line">    <span class="keyword">if</span> os.path.isdir(<span class="string">'./'</span> + str(label_list[i])) == <span class="keyword">False</span>:</span><br><span class="line">        os.mkdir(<span class="string">'./'</span> + str(label_list[i]))</span><br><span class="line"></span><br><span class="line">firstline = <span class="string">'var=0 &amp;&amp; youtube-dl --no-part -f \'worstvideo[height&gt;120][width&gt;160][ext=mp4]\' -o $var\'.%(ext)s\' '</span></span><br><span class="line">otherline = <span class="string">'var=$(($var+1)) &amp;&amp; youtube-dl -q --no-part -f \'worstvideo[height&gt;120][width&gt;160][ext=mp4]\' -o $var\'.%(ext)s\' '</span></span><br><span class="line"></span><br><span class="line">file_list = [<span class="keyword">None</span>]*<span class="number">487</span></span><br><span class="line">file_has_write = [<span class="keyword">False</span>]*<span class="number">487</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">487</span>):</span><br><span class="line">    file_list[i] = open(<span class="string">'./'</span>+str(i)+<span class="string">'/download_list.sh'</span>, <span class="string">'w'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(len(datalist)):</span><br><span class="line">    i_class = int(label_list[i])</span><br><span class="line">    <span class="keyword">if</span> file_has_write[i_class] == <span class="keyword">False</span>:</span><br><span class="line">        file_list[i_class].write(firstline + video_address[i] + <span class="string">'\n'</span>)</span><br><span class="line">        file_has_write[i_class] = <span class="keyword">True</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        file_list[i_class].write(otherline + video_address[i] + <span class="string">'\n'</span>)</span><br><span class="line">    file_list[i_class].flush()</span><br></pre></td></tr></table></figure>
-<p>flush() makes files change every time the program writes something. If not use flush(), the files will be written at the end of program.</p>
+<ul>
+<li>Dataset: Cityscape</li>
+<li>Input: 16 consecutive frames<ul>
+<li>The input blob size is 1x1x48xHxW, not 1x3x16xHxW. And the first convolutional layer’s kernel size is changed, too (9x3x3), which is equivalent to original C3D. </li>
+<li>However, 1x1x46x1024x2048 will comsume nearly 40G GPU memory, which is impossible at this moment. So I, firstly reduced the resolution, resized images into 450x900. This reduction of resolution will decrease the precision (I have done this experiment several days ago). So another solution, crop the image. I’ve written a Python input layer for getting the same bounding box for images and ground truth at one time. At first, I chosed 450x900, but I ended it and I chosed 600x600 for weighted softmax loss function.</li>
+</ul>
+</li>
+<li>ConvNet: C3D <ul>
+<li>Like FCN, I have turned the last three fully connected layers into convolutional layers. The kernel size of 6th convolutional group is 4x4, which is computed from the original C3D structure.</li>
+</ul>
+</li>
+<li>Loss: Weighted Softmax Loss Layer<ul>
+<li>When I use cropped images, the pixels near the border can not have a valid receptive field. So I assign those invalid pixels lower weights (0.1). For those which have valid receptive field, I don’t change the loss. This is implemented in caffe. I have added a new layer. It seems easy but … In bref, it’s done.</li>
+</ul>
+</li>
+</ul>
+<p>This kind of configuration have not started training. The training at this time, is without the weighted layer, it considers all pixels the same. I don’t know which is better but the weighted layer is logic. I will start the training tomorrow.</p>
+<p>The rest training detail:</p>
+<p>solver.prototxt</p>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">train_net:</span> <span class="string">"fcn_c3d_train.prototxt"</span></span><br><span class="line"><span class="symbol">display:</span> <span class="number">5</span></span><br><span class="line"><span class="symbol">average_loss:</span> <span class="number">20</span></span><br><span class="line"><span class="symbol">lr_policy:</span> <span class="string">"multistep"</span></span><br><span class="line"><span class="meta"># lr for unnormalized softmax</span></span><br><span class="line"><span class="symbol">base_lr:</span> <span class="number">1e-12</span></span><br><span class="line"><span class="meta"># high momentum</span></span><br><span class="line"><span class="symbol">stepvalue:</span> <span class="number">2975</span> <span class="meta"># 1</span></span><br><span class="line"><span class="symbol">stepvalue:</span> <span class="number">5950</span> <span class="meta"># 2</span></span><br><span class="line"><span class="symbol">stepvalue:</span> <span class="number">11900</span> <span class="meta"># 4</span></span><br><span class="line"><span class="symbol">stepvalue:</span> <span class="number">47600</span> <span class="meta"># 16</span></span><br><span class="line"><span class="symbol">stepvalue:</span> <span class="number">100000</span></span><br><span class="line"><span class="symbol">gamma:</span> <span class="number">0.2</span></span><br><span class="line"><span class="symbol">momentum:</span> <span class="number">0.99</span></span><br><span class="line"><span class="meta"># no gradient accumulation</span></span><br><span class="line"><span class="symbol">iter_size:</span> <span class="number">1</span></span><br><span class="line"><span class="symbol">max_iter:</span> <span class="number">300000</span></span><br><span class="line"><span class="symbol">weight_decay:</span> <span class="number">0.0005</span></span><br><span class="line"><span class="symbol">snapshot:</span> <span class="number">3000</span></span><br><span class="line"><span class="symbol">snapshot_prefix:</span> <span class="string">"snapshot/train"</span></span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -302,21 +319,27 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/Experiments/" rel="tag">#Experiments</a>
+          
+        </div>
+      
 
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/05/10/2016-05-10-ReadingPaper-C3D/" rel="next" title="Learning Spatiotemporal Features with 3D Convolutional Networks#PaperReading#">
-                <i class="fa fa-chevron-left"></i> Learning Spatiotemporal Features with 3D Convolutional Networks#PaperReading#
+              <a href="/2016/06/14/2016-06-14-shell-notes/" rel="next" title="linux shell notes">
+                <i class="fa fa-chevron-left"></i> linux shell notes
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/06/14/2016-06-14-shell-notes/" rel="prev" title="linux shell notes">
-                linux shell notes <i class="fa fa-chevron-right"></i>
+              <a href="/2016/06/28/2016-06-28-caffe-code-reading-softmax-with-loss/" rel="prev" title="Caffe Code Reading - softmax with loss">
+                Caffe Code Reading - softmax with loss <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -343,8 +366,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/06/07/2016-06-07-python-notes/"
-           data-title="Python notes" data-url="http://yoursite.com/2016/06/07/2016-06-07-python-notes/">
+      <div class="ds-thread" data-thread-key="2016/06/28/2016-06-28-experiments-crop-c3d-cityscape/"
+           data-title="Experiments of Cropped-Image-C3D-Cityscape" data-url="http://yoursite.com/2016/06/28/2016-06-28-experiments-crop-c3d-cityscape/">
       </div>
     
   </div>
@@ -428,7 +451,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#PIL-Image"><span class="nav-number">1.</span> <span class="nav-text">PIL.Image</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#os"><span class="nav-number">2.</span> <span class="nav-text">os</span></a></li></ol></div>
+              <p class="post-toc-empty">此文章未包含目录</p>
             
           </div>
         </section>
