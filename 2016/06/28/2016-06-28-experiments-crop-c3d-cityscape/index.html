@@ -90,7 +90,7 @@
 <meta property="og:url" content="http://yoursite.com/2016/06/28/2016-06-28-experiments-crop-c3d-cityscape/index.html">
 <meta property="og:site_name" content="holyseven's blog">
 <meta property="og:description" content="C3D on Cityscape, 16 frames…">
-<meta property="og:updated_time" content="2016-06-29T08:35:28.468Z">
+<meta property="og:updated_time" content="2016-07-11T14:22:36.535Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Experiments of Cropped-Image-C3D-Cityscape">
 <meta name="twitter:description" content="C3D on Cityscape, 16 frames…">
@@ -281,26 +281,28 @@
         <p>C3D on Cityscape, 16 frames…</p>
 <a id="more"></a>
 <ul>
-<li>Dataset: Cityscape</li>
-<li>Input: 16 consecutive frames<ul>
+<li><strong>Dataset</strong>: Cityscape</li>
+<li><strong>Input</strong>: 16 consecutive frames<ul>
 <li>The input blob size is 1x1x48xHxW, not 1x3x16xHxW. And the first convolutional layer’s kernel size is changed, too (9x3x3), which is equivalent to original C3D. </li>
-<li>However, 1x1x46x1024x2048 will comsume nearly 40G GPU memory, which is impossible at this moment. So I, firstly reduced the resolution, resized images into 450x900. This reduction of resolution will decrease the precision (I have done this experiment several days ago). So another solution, crop the image. I’ve written a Python input layer for getting the same bounding box for images and ground truth at one time. At first, I chosed 450x900, but I ended it and I chosed 600x600 for weighted softmax loss function.</li>
+<li>However, 1x1x48x1024x2048 will comsume nearly 40G GPU memory, which is impossible at this moment. So I, firstly reduced the resolution, resized images into 450x900. This reduction of resolution will decrease the precision. So another solution is to crop the image. I’ve written a Python input layer for getting the same bounding box for images and ground truth at one time. At first, I chosed 450x900, but I ended it and I chosed 600x600 for weighted softmax loss function.</li>
 </ul>
 </li>
-<li>ConvNet: C3D <ul>
-<li>Like FCN, I have turned the last three fully connected layers into convolutional layers. The kernel size of 6th convolutional group is 4x4, which is computed from the original C3D structure.</li>
-</ul>
-</li>
-<li>Loss: Weighted Softmax Loss Layer<ul>
+<li><strong>Loss</strong>: Weighted softmax loss function<ul>
+<li>According to my computation, for one pixel in the output layer before deconvolution, its receptive field is 187x187, depending on the network structure only. So for a smaller bounding box in the output 600x600, I set the weight 1 to the center region and 0.1 to the border region. </li>
 <li>When I use cropped images, the pixels near the border can not have a valid receptive field. So I assign those invalid pixels lower weights (0.1). For those which have valid receptive field, I don’t change the loss. This is implemented in caffe. I have added a new layer. It seems easy but … In bref, it’s done.</li>
 </ul>
 </li>
+<li><strong>ConvNet</strong>: C3D <ul>
+<li>Like FCN, I have turned the last three fully connected layers into convolutional layers. The kernel size of 6th convolutional group is 1x4x4, which is computed from the original C3D structure.</li>
 </ul>
-<p>This kind of configuration have not started training. The training at this time, is without the weighted layer, it considers all pixels the same. I don’t know which is better but the weighted layer is logic. I will start the training tomorrow.</p>
+</li>
+</ul>
+<p><del>This kind of configuration have not started training. The training at this time, is without the weighted layer, it considers all pixels the same. I don’t know which is better but the weighted layer is logic. I will start the training tomorrow.</del><br>Changed to</p>
+<blockquote>
+<p><strong>Training starts at 10h, 29 juin</strong><br>Two trainings. one is reducted resolution(450x900); another is weighted loss with cropped images(600x600).<br><strong>Training ends on 8 july</strong><br>The result of approach of reducted resolution is 72% while weighted loss is 70%, noting that FCN trained on Cityscape’s single image (not 16 consecutive frames) is 85%.<br><strong>Training with smaller learning rate for the weighted loss approach starts 10 july</strong><br>fixed learning rate: 3e-13</p>
+</blockquote>
 <p>The rest training detail:</p>
-<p>solver.prototxt</p>
-<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">train_net:</span> <span class="string">"fcn_c3d_train.prototxt"</span></span><br><span class="line"><span class="symbol">display:</span> <span class="number">5</span></span><br><span class="line"><span class="symbol">average_loss:</span> <span class="number">20</span></span><br><span class="line"><span class="symbol">lr_policy:</span> <span class="string">"multistep"</span></span><br><span class="line"><span class="meta"># lr for unnormalized softmax</span></span><br><span class="line"><span class="symbol">base_lr:</span> <span class="number">3e-11</span> <span class="meta"># 5e-12 for reducted resolution</span></span><br><span class="line"><span class="meta"># high momentum</span></span><br><span class="line"><span class="symbol">stepvalue:</span> <span class="number">2975</span> <span class="meta"># 1</span></span><br><span class="line"><span class="symbol">stepvalue:</span> <span class="number">5950</span> <span class="meta"># 2</span></span><br><span class="line"><span class="symbol">stepvalue:</span> <span class="number">11900</span> <span class="meta"># 4</span></span><br><span class="line"><span class="symbol">stepvalue:</span> <span class="number">47600</span> <span class="meta"># 16</span></span><br><span class="line"><span class="symbol">stepvalue:</span> <span class="number">100000</span></span><br><span class="line"><span class="symbol">gamma:</span> <span class="number">0.2</span></span><br><span class="line"><span class="symbol">momentum:</span> <span class="number">0.99</span></span><br><span class="line"><span class="meta"># no gradient accumulation</span></span><br><span class="line"><span class="symbol">iter_size:</span> <span class="number">1</span></span><br><span class="line"><span class="symbol">max_iter:</span> <span class="number">300000</span></span><br><span class="line"><span class="symbol">weight_decay:</span> <span class="number">0.0005</span></span><br><span class="line"><span class="symbol">snapshot:</span> <span class="number">3000</span></span><br><span class="line"><span class="symbol">snapshot_prefix:</span> <span class="string">"snapshot/train"</span></span><br></pre></td></tr></table></figure>
-<p><strong>Training starts at 10h, 29 juin</strong><br>    : two trainings. one is reducted resolution(450x900); another is weighted loss with cropped images(600x600).</p>
+<p>solver.prototxt<br><figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">train_net:</span> <span class="string">"fcn_c3d_train.prototxt"</span></span><br><span class="line"><span class="symbol">display:</span> <span class="number">5</span></span><br><span class="line"><span class="symbol">average_loss:</span> <span class="number">20</span></span><br><span class="line"><span class="symbol">lr_policy:</span> <span class="string">"multistep"</span></span><br><span class="line"><span class="meta"># lr for unnormalized softmax</span></span><br><span class="line"><span class="symbol">base_lr:</span> <span class="number">3e-11</span> <span class="meta"># 5e-12 for reducted resolution</span></span><br><span class="line"><span class="meta"># high momentum</span></span><br><span class="line"><span class="symbol">stepvalue:</span> <span class="number">2975</span> <span class="meta"># 1</span></span><br><span class="line"><span class="symbol">stepvalue:</span> <span class="number">5950</span> <span class="meta"># 2</span></span><br><span class="line"><span class="symbol">stepvalue:</span> <span class="number">11900</span> <span class="meta"># 4</span></span><br><span class="line"><span class="symbol">stepvalue:</span> <span class="number">47600</span> <span class="meta"># 16</span></span><br><span class="line"><span class="symbol">stepvalue:</span> <span class="number">100000</span></span><br><span class="line"><span class="symbol">gamma:</span> <span class="number">0.2</span></span><br><span class="line"><span class="symbol">momentum:</span> <span class="number">0.99</span></span><br><span class="line"><span class="meta"># no gradient accumulation</span></span><br><span class="line"><span class="symbol">iter_size:</span> <span class="number">1</span></span><br><span class="line"><span class="symbol">max_iter:</span> <span class="number">300000</span></span><br><span class="line"><span class="symbol">weight_decay:</span> <span class="number">0.0005</span></span><br><span class="line"><span class="symbol">snapshot:</span> <span class="number">3000</span></span><br><span class="line"><span class="symbol">snapshot_prefix:</span> <span class="string">"snapshot/train"</span></span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -413,7 +415,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">13</span>
+              <span class="site-state-item-count">14</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
