@@ -90,10 +90,13 @@
 <meta property="og:url" content="http://yoursite.com/2016/07/17/2016-07-17-experiments-v2v/index.html">
 <meta property="og:site_name" content="holyseven's blog">
 <meta property="og:description" content="V2V fine-tuning on Galtech and Cityscape, 16 frames, idea from V2V.">
-<meta property="og:updated_time" content="2016-07-20T10:09:30.979Z">
+<meta property="og:image" content="http://yoursite.com/images/v2v0.png">
+<meta property="og:image" content="http://yoursite.com/images/v2v_smallerlr.png">
+<meta property="og:updated_time" content="2016-07-20T14:26:57.488Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="V2V-Cityscape, V2V-Galtech">
 <meta name="twitter:description" content="V2V fine-tuning on Galtech and Cityscape, 16 frames, idea from V2V.">
+<meta name="twitter:image" content="http://yoursite.com/images/v2v0.png">
 
 
 
@@ -300,7 +303,17 @@
 <p>120k: 73.8189<br>198k: 73.1337</p>
 </blockquote>
 <p>(All snapshot are saved in ./snapshot0)</p>
-<h2 id="V2V-on-Galtech-with-smaller-learning-rate"><a href="#V2V-on-Galtech-with-smaller-learning-rate" class="headerlink" title="V2V on Galtech with smaller learning rate"></a>V2V on Galtech with smaller learning rate</h2><p>It seems like overfitting (results on training set ourperform much the results on val set). So I decide to decrease the learning rate and retrain it. Suggested from the article, normalize the loss, learning rate is set to 1e-4 and is divided by 10 every 30k iteration.</p>
+<p>Loss<br><img src="/images/v2v0.png" alt="Loss evoluation" title="Loss"></p>
+<h2 id="V2V-on-Galtech-with-smaller-learning-rate"><a href="#V2V-on-Galtech-with-smaller-learning-rate" class="headerlink" title="V2V on Galtech with smaller learning rate"></a>V2V on Galtech with smaller learning rate</h2><p><del>It seems like overfitting (results on training set ourperform much the results on val set).</del> </p>
+<blockquote>
+<p>Maybe more important reason is lack of bias parameters in deconvolution layers.</p>
+</blockquote>
+<p>So I decide to decrease the learning rate and retrain it. Suggested from the article, normalize the loss, learning rate is set to 1e-4 and is divided by 10 every 30k iteration. For the two previous trainings, I set the bias parameters to false for all deconvolution layers, and this time, I add those bias parameters.</p>
+<p>Results on validation set:</p>
+<blockquote>
+<p>12k: 72.9577<br>60k: 74.0443</p>
+</blockquote>
+<p>Loss<br><img src="/images/v2v_smallerlr.png" alt="Loss evoluation" title="Loss"></p>
 
       
     </div>
