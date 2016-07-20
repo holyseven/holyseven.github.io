@@ -90,10 +90,12 @@
 <meta property="og:url" content="http://yoursite.com/2016/07/17/2016-07-17-experiments-gvfin/index.html">
 <meta property="og:site_name" content="holyseven's blog">
 <meta property="og:description" content="C3D finetuning on Imagenet, 16 frames">
-<meta property="og:updated_time" content="2016-07-17T12:07:36.270Z">
+<meta property="og:image" content="http://yoursite.com/images/train_log.png">
+<meta property="og:updated_time" content="2016-07-20T10:05:15.403Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Generate images from ImageNet for C3D finetuning">
 <meta name="twitter:description" content="C3D finetuning on Imagenet, 16 frames">
+<meta name="twitter:image" content="http://yoursite.com/images/train_log.png">
 
 
 
@@ -289,10 +291,11 @@
 </li>
 </ul>
 <blockquote>
-<p><strong>Training starts on 15, July</strong><br>At first I want to use LMDB to train the data, but with python wrapper, the reader of LMDB database will comsume lots of memory and will not release them. This leads to a memory leak.<br><strong>Seconde training starts on 17, July</strong><br>So I changed to use images with python wrapper. </p>
+<p><strong>Training starts on 15, July</strong><br>At first I want to use LMDB to train the data, but with python wrapper, the reader of LMDB database will comsume lots of memory and will not release them. This leads to a memory leak.<br><strong>Seconde training starts on 17, July</strong><br>So I changed to use images directly, with python wrapper.<br><strong>Val starts on 19 July</strong><br>Intermediate results:<br>50k: 26.842, 53.212<br>100k: 37.882, 64.758 </p>
 </blockquote>
+<p>Loss evoluation:<br><img src="/images/train_log.png" alt="Loss evoluation" title="Loss"></p>
 <p>The rest training detail:</p>
-<p>solver.prototxt<br><figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">lr_policy:</span> <span class="string">"multistep"</span></span><br><span class="line"><span class="meta"># lr for unnormalized softmax</span></span><br><span class="line"><span class="symbol">base_lr:</span> <span class="number">1e-4</span> </span><br><span class="line"><span class="meta"># high momentum</span></span><br><span class="line"><span class="symbol">stepvalue:</span> <span class="number">150000</span> <span class="meta"># </span></span><br><span class="line"><span class="symbol">stepvalue:</span> <span class="number">300000</span> <span class="meta"># </span></span><br><span class="line"><span class="symbol">stepvalue:</span> <span class="number">600000</span> <span class="meta">#</span></span><br><span class="line"><span class="symbol">gamma:</span> <span class="number">0.1</span></span><br><span class="line"><span class="symbol">momentum:</span> <span class="number">0.95</span></span><br><span class="line"><span class="meta"># no gradient accumulation</span></span><br><span class="line"><span class="symbol">iter_size:</span> <span class="number">1</span></span><br><span class="line"><span class="symbol">weight_decay:</span> <span class="number">0.0005</span></span><br></pre></td></tr></table></figure></p>
+<p>solver.prototxt<br><figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">lr_policy:</span> <span class="string">"multistep"</span></span><br><span class="line"><span class="meta"># lr for unnormalized softmax</span></span><br><span class="line"><span class="symbol">base_lr:</span> <span class="number">1e-4</span> </span><br><span class="line"><span class="meta"># high momentum</span></span><br><span class="line"><span class="symbol">stepvalue:</span> <span class="number">80000</span> <span class="meta"># </span></span><br><span class="line"><span class="symbol">stepvalue:</span> <span class="number">200000</span> <span class="meta"># </span></span><br><span class="line"><span class="symbol">stepvalue:</span> <span class="number">400000</span> <span class="meta">#</span></span><br><span class="line"><span class="symbol">gamma:</span> <span class="number">0.1</span></span><br><span class="line"><span class="symbol">momentum:</span> <span class="number">0.95</span></span><br><span class="line"><span class="meta"># no gradient accumulation</span></span><br><span class="line"><span class="symbol">iter_size:</span> <span class="number">1</span></span><br><span class="line"><span class="symbol">weight_decay:</span> <span class="number">0.0005</span></span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -323,8 +326,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/07/17/2016-07-17-experiments-v2v/" rel="next" title="V2V-Cityscape">
-                <i class="fa fa-chevron-left"></i> V2V-Cityscape
+              <a href="/2016/07/17/2016-07-17-experiments-v2v/" rel="next" title="V2V-Cityscape, V2V-Galtech">
+                <i class="fa fa-chevron-left"></i> V2V-Cityscape, V2V-Galtech
               </a>
             
           </div>

@@ -84,16 +84,16 @@
 
 
 
-<meta name="description" content="V2V finetuning on Cityscape, 16 frames, ideal from V2V.">
+<meta name="description" content="V2V fine-tuning on Galtech and Cityscape, 16 frames, idea from V2V.">
 <meta property="og:type" content="article">
-<meta property="og:title" content="V2V-Cityscape">
+<meta property="og:title" content="V2V-Cityscape, V2V-Galtech">
 <meta property="og:url" content="http://yoursite.com/2016/07/17/2016-07-17-experiments-v2v/index.html">
 <meta property="og:site_name" content="holyseven's blog">
-<meta property="og:description" content="V2V finetuning on Cityscape, 16 frames, ideal from V2V.">
-<meta property="og:updated_time" content="2016-07-17T12:06:55.054Z">
+<meta property="og:description" content="V2V fine-tuning on Galtech and Cityscape, 16 frames, idea from V2V.">
+<meta property="og:updated_time" content="2016-07-20T10:09:30.979Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="V2V-Cityscape">
-<meta name="twitter:description" content="V2V finetuning on Cityscape, 16 frames, ideal from V2V.">
+<meta name="twitter:title" content="V2V-Cityscape, V2V-Galtech">
+<meta name="twitter:description" content="V2V fine-tuning on Galtech and Cityscape, 16 frames, idea from V2V.">
 
 
 
@@ -111,7 +111,7 @@
   };
 </script>
 
-  <title> V2V-Cityscape | holyseven's blog </title>
+  <title> V2V-Cityscape, V2V-Galtech | holyseven's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -231,7 +231,7 @@
             
             
               
-                V2V-Cityscape
+                V2V-Cityscape, V2V-Galtech
               
             
           </h1>
@@ -278,16 +278,29 @@
       
 
       
-        <p>V2V finetuning on Cityscape, 16 frames, ideal from <a href="http://arxiv.org/pdf/1511.06681v1.pdf" target="_blank" rel="external">V2V</a>.<br><a id="more"></a></p>
-<p>V2V is designed for voxel prediction, not only classifying pixels in one image, but in all 16 frames.</p>
-<p>While FCN-8S could have nearly 90% classification accuracy, we firstly segment all images in the sequences of Cityscape, where only the 20th image is annotated, the rest has no ground truth. We consider the FCN-8S results as fake ground truth.</p>
-<p>We use this fake ground truth plus the 20th image truely ground truth to train the V2V model.</p>
+        <p>V2V fine-tuning on Galtech and Cityscape, 16 frames, idea from <a href="http://arxiv.org/pdf/1511.06681v1.pdf" target="_blank" rel="external">V2V</a>.<br><a id="more"></a></p>
+<h2 id="V2V-on-Cityscape"><a href="#V2V-on-Cityscape" class="headerlink" title="V2V on Cityscape"></a>V2V on Cityscape</h2><p>V2V is designed for voxel prediction, not only classifying pixels in one image, but in all 16 frames.</p>
+<p>While FCN-8S could have nearly 90% classification accuracy, we firstly segment all images of the sequences of Cityscape, where only the 20th image is manually completely annotated and the rest has no ground truth. We consider the FCN-8S results as fake ground truth.</p>
+<p>We use this fake ground truth plus the 20th image true ground truth to train the V2V model.</p>
+<p>Since the structure of V2V has several layers in common as C3D, it could copy the weights from C3D. C3D is trained on Sport-1M for action recognition.</p>
 <blockquote>
-<p><strong>Training starts on 15, July</strong><br>Finished on 17 July. Each pixel has an average 0.9 loss, while for FCN-8S, each pixel 0.2~0.3.</p>
-<p><strong>Test directly on training database, starts on 17 July</strong><br>Val database has not been constructed yet so I test on training data at first. I test 6k_iter, 12_iter, 24, 36 and 54.</p>
+<p><strong>Training on Cityscape starts on 15, July</strong><br>Finished on 17 July. Each pixel has an average 0.9 loss, while for FCN-8S, each pixel 0.2~0.3.</p>
+<p><strong>Test directly on training database, starts on 17 July</strong><br>Val database has not been constructed yet so I test on training data at first. I test 6k_iter, 12_iter, 24, 36 and 54.<br>54k: 65.9629%<br>36k: 65.3071%<br>24k: 64.7252%<br>12k: 63.9687%<br>6k:  61.9525%<br>I think if I continue to train it, the precision will increase but will not surpasse 70%, which means it can not reach the niveau of FCN.</p>
 </blockquote>
-<p>The rest training detail:</p>
+<p>The rest Cityscape training detail:</p>
 <p>solver.prototxt<br><figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">base_lr:</span> <span class="number">1e-9</span> </span><br><span class="line"><span class="meta"># high momentum</span></span><br><span class="line"><span class="symbol">stepvalue:</span> <span class="number">200</span> <span class="meta"># 1</span></span><br><span class="line"><span class="symbol">stepvalue:</span> <span class="number">2975</span> <span class="meta"># 2</span></span><br><span class="line"><span class="symbol">stepvalue:</span> <span class="number">6000</span> <span class="meta"># 4</span></span><br><span class="line"><span class="symbol">stepvalue:</span> <span class="number">47600</span> <span class="meta"># 16</span></span><br><span class="line"><span class="symbol">stepvalue:</span> <span class="number">100000</span></span><br><span class="line"><span class="symbol">gamma:</span> <span class="number">0.2</span></span><br><span class="line"><span class="symbol">momentum:</span> <span class="number">0.95</span></span><br><span class="line"><span class="meta"># no gradient accumulation</span></span><br><span class="line"><span class="symbol">iter_size:</span> <span class="number">1</span></span><br><span class="line"><span class="symbol">weight_decay:</span> <span class="number">0.0005</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="V2V-on-Galtech"><a href="#V2V-on-Galtech" class="headerlink" title="V2V on Galtech"></a>V2V on Galtech</h2><p>Because of this not-good-enough result on Cityscape, I have to check whether my codes have bugs or not. So I train the same net on Galtech, which is the database in the article V2V. Galtech has 63 videos for training, 38 for validation. Each video has 60 to 400 frames, each frame is annotated for 8 classes.</p>
+<p>All frames are resized to 128x171, and cropped to 112x112 and then put 16 frames to the net for training. Output is also 16 frames of 112x112. Each pixel will contribute for the loss function.</p>
+<p>Unluckily, the results on validation set are not very good:</p>
+<blockquote>
+<p>24k: 51.2222<br>60k: 52.2793<br>90k: 51.7703<br>120k: 52.6046</p>
+</blockquote>
+<p>Strangely, the results on training set are good:</p>
+<blockquote>
+<p>120k: 73.8189<br>198k: 73.1337</p>
+</blockquote>
+<p>(All snapshot are saved in ./snapshot0)</p>
+<h2 id="V2V-on-Galtech-with-smaller-learning-rate"><a href="#V2V-on-Galtech-with-smaller-learning-rate" class="headerlink" title="V2V on Galtech with smaller learning rate"></a>V2V on Galtech with smaller learning rate</h2><p>It seems like overfitting (results on training set ourperform much the results on val set). So I decide to decrease the learning rate and retrain it. Suggested from the article, normalize the loss, learning rate is set to 1e-4 and is divided by 10 every 30k iteration.</p>
 
       
     </div>
@@ -355,7 +368,7 @@
   <div class="comments" id="comments">
     
       <div class="ds-thread" data-thread-key="2016/07/17/2016-07-17-experiments-v2v/"
-           data-title="V2V-Cityscape" data-url="http://yoursite.com/2016/07/17/2016-07-17-experiments-v2v/">
+           data-title="V2V-Cityscape, V2V-Galtech" data-url="http://yoursite.com/2016/07/17/2016-07-17-experiments-v2v/">
       </div>
     
   </div>
@@ -439,7 +452,7 @@
               
             
             
-              <p class="post-toc-empty">This post does not have a Table of Contents</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#V2V-on-Cityscape"><span class="nav-number">1.</span> <span class="nav-text">V2V on Cityscape</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#V2V-on-Galtech"><span class="nav-number">2.</span> <span class="nav-text">V2V on Galtech</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#V2V-on-Galtech-with-smaller-learning-rate"><span class="nav-number">3.</span> <span class="nav-text">V2V on Galtech with smaller learning rate</span></a></li></ol></div>
             
           </div>
         </section>
