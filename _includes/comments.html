@@ -1,0 +1,239 @@
+<!-- 评论区 -->
+<section class="comments-section" id="comments">
+  <h2 class="comments-title">留言</h2>
+
+  <!-- 评论列表 -->
+  <div class="comments-list" id="comments-list">
+    <p class="comments-loading">加载评论中...</p>
+  </div>
+
+  <!-- 发表评论表单 -->
+  <div class="comment-form-wrapper" id="comment-form-main">
+    <h3 class="comment-form-heading">发表评论</h3>
+    <form class="comment-form" id="comment-form" autocomplete="off">
+      <input type="text" id="comment-nickname" class="comment-input" placeholder="昵称" required maxlength="50">
+      <textarea id="comment-content" class="comment-textarea" placeholder="写下你的评论..." required maxlength="2000" rows="4"></textarea>
+      <details class="author-toggle">
+        <summary>我是作者</summary>
+        <input type="password" id="comment-author-key" class="comment-input" placeholder="输入作者密钥" autocomplete="off">
+      </details>
+      <button type="submit" class="comment-submit" id="comment-submit">提交评论</button>
+    </form>
+  </div>
+</section>
+
+<script>
+(function() {
+  var API = '{{ site.comments_api }}';
+  var SLUG = '{{ page.url }}';
+  var listEl = document.getElementById('comments-list');
+  var form = document.getElementById('comment-form');
+  var submitBtn = document.getElementById('comment-submit');
+  var allComments = [];
+
+  function escapeHtml(str) {
+    var div = document.createElement('div');
+    div.appendChild(document.createTextNode(str));
+    return div.innerHTML;
+  }
+
+  function formatTime(iso) {
+    var d = new Date(iso);
+    var y = d.getFullYear();
+    var m = String(d.getMonth() + 1).padStart(2, '0');
+    var day = String(d.getDate()).padStart(2, '0');
+    var h = String(d.getHours()).padStart(2, '0');
+    var min = String(d.getMinutes()).padStart(2, '0');
+    return y + '-' + m + '-' + day + ' ' + h + ':' + min;
+  }
+
+  function buildTree(comments) {
+    var topLevel = [];
+    var childrenMap = {};
+
+    comments.forEach(function(c) {
+      childrenMap[c.id] = [];
+    });
+
+    comments.forEach(function(c) {
+      if (c.parent_id && childrenMap[c.parent_id] !== undefined) {
+        childrenMap[c.parent_id].push(c);
+      } else if (c.parent_id) {
+        // parent might be a reply itself; find root parent and flatten to second level
+        var parent = comments.find(function(p) { return p.id === c.parent_id; });
+        if (parent && parent.parent_id && childrenMap[parent.parent_id] !== undefined) {
+          childrenMap[parent.parent_id].push(c);
+        } else {
+          topLevel.push(c);
+        }
+      } else {
+        topLevel.push(c);
+      }
+    });
+
+    return { topLevel: topLevel, childrenMap: childrenMap };
+  }
+
+  function renderComment(c, isReply) {
+    var authorBadge = c.is_author ? '<span class="comment-author-badge">作者</span>' : '';
+    var replyClass = isReply ? ' comment-reply' : '';
+    return '<div class="comment-item' + replyClass + '" data-id="' + c.id + '">' +
+      '<div class="comment-meta">' +
+        '<span class="comment-nickname">' + escapeHtml(c.nickname) + '</span>' +
+        authorBadge +
+        '<span class="comment-time">' + formatTime(c.created_at) + '</span>' +
+      '</div>' +
+      '<div class="comment-body">' + escapeHtml(c.content).replace(/\n/g, '<br>') + '</div>' +
+      '<button type="button" class="comment-reply-btn" data-id="' + c.id + '">回复</button>' +
+      '<div class="reply-form-container" id="reply-form-' + c.id + '"></div>' +
+    '</div>';
+  }
+
+  function renderComments(comments) {
+    if (comments.length === 0) {
+      listEl.innerHTML = '<p class="comments-empty">还没有评论，来说点什么吧。</p>';
+      return;
+    }
+
+    var tree = buildTree(comments);
+    var html = '';
+
+    tree.topLevel.forEach(function(c) {
+      html += renderComment(c, false);
+      var children = tree.childrenMap[c.id] || [];
+      children.forEach(function(child) {
+        html += renderComment(child, true);
+      });
+    });
+
+    listEl.innerHTML = html;
+  }
+
+  function loadComments() {
+    if (!API) {
+      listEl.innerHTML = '<p class="comments-empty">评论系统尚未配置。</p>';
+      return;
+    }
+    fetch(API + '/comments?slug=' + encodeURIComponent(SLUG))
+      .then(function(res) { return res.json(); })
+      .then(function(data) {
+        allComments = data.comments || [];
+        renderComments(allComments);
+      })
+      .catch(function() {
+        listEl.innerHTML = '<p class="comments-empty">评论加载失败。</p>';
+      });
+  }
+
+  function submitComment(slug, nickname, content, parentId, authorKey) {
+    return fetch(API + '/comments', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        slug: slug,
+        nickname: nickname,
+        content: content,
+        parent_id: parentId || null,
+        author_key: authorKey || ''
+      })
+    }).then(function(res) { return res.json(); });
+  }
+
+  // Main form submit
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    var nickname = document.getElementById('comment-nickname').value.trim();
+    var content = document.getElementById('comment-content').value.trim();
+    var authorKey = document.getElementById('comment-author-key').value;
+
+    if (!nickname || !content) return;
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = '提交中...';
+
+    submitComment(SLUG, nickname, content, null, authorKey)
+      .then(function(data) {
+        if (data.error) {
+          alert(data.error);
+          return;
+        }
+        document.getElementById('comment-content').value = '';
+        loadComments();
+      })
+      .catch(function() { alert('提交失败，请稍后重试'); })
+      .finally(function() {
+        submitBtn.disabled = false;
+        submitBtn.textContent = '提交评论';
+      });
+  });
+
+  // Reply button delegation
+  listEl.addEventListener('click', function(e) {
+    if (!e.target.classList.contains('comment-reply-btn')) return;
+
+    var parentId = e.target.getAttribute('data-id');
+    var container = document.getElementById('reply-form-' + parentId);
+
+    // Toggle: if already has form, remove it
+    if (container.querySelector('form')) {
+      container.innerHTML = '';
+      return;
+    }
+
+    // Remove any other open reply forms
+    var openForms = listEl.querySelectorAll('.reply-form-container form');
+    for (var i = 0; i < openForms.length; i++) {
+      openForms[i].parentNode.innerHTML = '';
+    }
+
+    var savedNickname = document.getElementById('comment-nickname').value.trim();
+    container.innerHTML =
+      '<form class="comment-form reply-form" autocomplete="off">' +
+        '<input type="text" class="comment-input reply-nickname" placeholder="昵称" required maxlength="50" value="' + escapeHtml(savedNickname) + '">' +
+        '<textarea class="comment-textarea reply-content" placeholder="写下你的回复..." required maxlength="2000" rows="3"></textarea>' +
+        '<div class="reply-form-actions">' +
+          '<button type="button" class="comment-cancel-btn">取消</button>' +
+          '<button type="submit" class="comment-submit reply-submit">回复</button>' +
+        '</div>' +
+      '</form>';
+
+    var replyForm = container.querySelector('form');
+    var cancelBtn = container.querySelector('.comment-cancel-btn');
+
+    cancelBtn.addEventListener('click', function() { container.innerHTML = ''; });
+
+    replyForm.addEventListener('submit', function(ev) {
+      ev.preventDefault();
+      var nickname = replyForm.querySelector('.reply-nickname').value.trim();
+      var content = replyForm.querySelector('.reply-content').value.trim();
+      var authorKey = document.getElementById('comment-author-key').value;
+      var replySubmitBtn = replyForm.querySelector('.reply-submit');
+
+      if (!nickname || !content) return;
+
+      replySubmitBtn.disabled = true;
+      replySubmitBtn.textContent = '提交中...';
+
+      submitComment(SLUG, nickname, content, parseInt(parentId), authorKey)
+        .then(function(data) {
+          if (data.error) {
+            alert(data.error);
+            return;
+          }
+          container.innerHTML = '';
+          // Sync nickname to main form
+          document.getElementById('comment-nickname').value = nickname;
+          loadComments();
+        })
+        .catch(function() { alert('提交失败，请稍后重试'); })
+        .finally(function() {
+          replySubmitBtn.disabled = false;
+          replySubmitBtn.textContent = '回复';
+        });
+    });
+  });
+
+  // Load on page ready
+  loadComments();
+})();
+</script>

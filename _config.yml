@@ -1,0 +1,75 @@
+# ==============================================================================
+# 站点配置文件
+# 请修改下方带有 "TODO" 标记的项目为你自己的信息
+# ==============================================================================
+
+# TODO: 修改为你的网站标题
+title: "Jacques' Blog"
+
+# TODO: 修改为你的网站描述（会显示在首页和 SEO 中）
+description: "一个简洁的个人网站，记录技术与生活。"
+
+# TODO: 修改为你的 GitHub Pages 地址，格式为 https://用户名.github.io
+url: "https://holyseven.github.io"
+
+# 如果网站部署在子路径下（如 https://user.github.io/blog），填写 "/blog"
+# 如果是根路径部署，留空即可
+baseurl: ""
+
+# TODO: 修改为你的名字
+author: "你的名字"
+
+# 文章永久链接格式
+permalink: /blog/:title/
+
+# Markdown 渲染引擎
+markdown: kramdown
+kramdown:
+  input: GFM
+
+# 构建设置
+include:
+  - _pages
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - LICENSE
+  - vendor
+
+# 集合（Collections）配置
+# _notes 文件夹用于存放短篇随想，和正式博客文章区分
+collections:
+  notes:
+    output: true
+    permalink: /notes/:title/
+
+# 为不同内容类型设置默认 front matter
+defaults:
+  # 博客文章默认值
+  - scope:
+      path: "_posts"
+      type: "posts"
+    values:
+      layout: "post"
+  # 笔记默认值
+  - scope:
+      path: "_notes"
+      type: "notes"
+    values:
+      layout: "post"
+  # 独立页面默认值
+  - scope:
+      path: "_pages"
+      type: "pages"
+    values:
+      layout: "page"
+      permalink: /:title/
+
+# 评论系统 API 地址（部署 Worker 后替换为实际 URL）
+comments_api: "https://comments-worker.jacqueslixuhong.workers.dev"
+
+# 插件（GitHub Pages 支持的插件）
+plugins:
+  - jekyll-seo-tag
