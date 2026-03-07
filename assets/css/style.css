@@ -340,6 +340,35 @@ main.container {
   margin: 40px 0;
 }
 
+/* ============ 表格 ============ */
+.post-content table,
+.page-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 24px 0;
+  font-size: 0.9rem;
+}
+
+.post-content th,
+.page-content th {
+  background-color: var(--color-bg-secondary);
+  font-weight: 600;
+  text-align: left;
+}
+
+.post-content th,
+.post-content td,
+.page-content th,
+.page-content td {
+  padding: 10px 14px;
+  border: 1px solid var(--color-border);
+}
+
+.post-content tbody tr:hover,
+.page-content tbody tr:hover {
+  background-color: var(--color-bg-secondary);
+}
+
 /* ============ 笔记列表页 ============ */
 .notes-list {
   list-style: none;
