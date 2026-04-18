@@ -602,7 +602,168 @@ main.container {
   color: var(--color-text);
 }
 
+/* ============ 三栏布局：TOC + 正文 + 评论面板 ============ */
+.post-layout {
+  position: relative;
+}
+
+/* 侧面板通用 */
+.toc-panel,
+.comments-panel {
+  position: fixed;
+  top: var(--nav-height);
+  height: calc(100vh - var(--nav-height));
+  width: 280px;
+  background-color: var(--color-bg);
+  border-right: 1px solid var(--color-border);
+  overflow-y: auto;
+  z-index: 50;
+  transition: transform 0.25s ease;
+  padding: 24px 16px;
+}
+
+.toc-panel {
+  left: 0;
+  transform: translateX(-100%);
+}
+
+.toc-panel.open {
+  transform: translateX(0);
+}
+
+.comments-panel {
+  right: 0;
+  left: auto;
+  border-right: none;
+  border-left: 1px solid var(--color-border);
+  transform: translateX(100%);
+}
+
+.comments-panel.open {
+  transform: translateX(0);
+}
+
+/* 切换按钮 */
+.panel-toggle {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 60;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  background-color: var(--color-bg);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s, background-color 0.15s, border-color 0.15s;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+.panel-toggle:hover {
+  color: var(--color-text);
+  border-color: var(--color-text-secondary);
+}
+
+.panel-toggle.active {
+  background-color: var(--color-link);
+  color: var(--color-bg);
+  border-color: var(--color-link);
+}
+
+.toc-toggle {
+  left: 12px;
+}
+
+.comments-toggle {
+  right: 12px;
+}
+
+/* TOC 样式 */
+.toc-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.toc-item {
+  margin-bottom: 2px;
+}
+
+.toc-h3 {
+  padding-left: 16px;
+}
+
+.toc-link {
+  display: block;
+  padding: 4px 8px;
+  font-size: 0.82rem;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  border-radius: 4px;
+  line-height: 1.5;
+  transition: color 0.15s, background-color 0.15s;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.toc-link:hover {
+  color: var(--color-text);
+  background-color: var(--color-bg-secondary);
+}
+
+.toc-link.active {
+  color: var(--color-link);
+  background-color: var(--color-bg-secondary);
+  font-weight: 600;
+}
+
+/* 评论面板内：缩略评论（hover 展开） */
+.comments-panel .comment-body {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.comments-panel .comment-item:hover .comment-body {
+  white-space: pre-wrap;
+  overflow: visible;
+  text-overflow: unset;
+}
+
+/* 评论面板内：适配窄宽度 */
+.comments-panel .comments-section {
+  margin-top: 0;
+  border-top: none;
+  padding-top: 0;
+}
+
+.comments-panel .comment-reply {
+  margin-left: 16px;
+}
+
+.comments-panel .comment-submit {
+  width: 100%;
+}
+
+.comments-panel .reply-form-actions {
+  flex-direction: column;
+}
+
 /* ============ 响应式 ============ */
+@media (max-width: 768px) {
+  .toc-panel,
+  .comments-panel {
+    width: 85vw;
+    max-width: 320px;
+  }
+}
+
 @media (max-width: 600px) {
   html {
     font-size: 16px;

@@ -1,25 +1,44 @@
 ---
 layout: default
 ---
-<!-- 文章布局：用于博客文章和笔记 -->
-<article class="post">
-  <header class="post-header">
-    <h1 class="post-title">{{ page.title }}</h1>
-    <time class="post-date" datetime="{{ page.date | date_to_xmlschema }}">
-      {{ page.date | date: "%Y 年 %m 月 %d 日" }}
-    </time>
-    {% if page.tags.size > 0 %}
-    <div class="post-tags">
-      {% for tag in page.tags %}
-      <span class="tag">{{ tag }}</span>
-      {% endfor %}
+<!-- 文章布局：三栏结构 — 左侧目录 | 正文 | 右侧评论 -->
+<div class="post-layout">
+  <!-- 左侧 TOC 面板 -->
+  <aside class="toc-panel" id="toc-panel">
+    <nav class="toc-nav" id="toc-nav"></nav>
+  </aside>
+
+  <!-- 中间正文（保持现有结构） -->
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">{{ page.title }}</h1>
+      <time class="post-date" datetime="{{ page.date | date_to_xmlschema }}">
+        {{ page.date | date: "%Y 年 %m 月 %d 日" }}
+      </time>
+      {% if page.tags.size > 0 %}
+      <div class="post-tags">
+        {% for tag in page.tags %}
+        <span class="tag">{{ tag }}</span>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </header>
+
+    <div class="post-content">
+      {{ content }}
     </div>
-    {% endif %}
-  </header>
+  </article>
 
-  <div class="post-content">
-    {{ content }}
-  </div>
-</article>
+  <!-- 右侧评论面板 -->
+  <aside class="comments-panel" id="comments-panel">
+    {% include comments.html %}
+  </aside>
+</div>
 
-{% include comments.html %}
+<!-- 悬浮切换按钮 -->
+<button class="panel-toggle toc-toggle" id="toc-toggle" title="目录">
+  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="3" y1="5" x2="17" y2="5"/><line x1="3" y1="10" x2="13" y2="10"/><line x1="3" y1="15" x2="15" y2="15"/></svg>
+</button>
+<button class="panel-toggle comments-toggle" id="comments-toggle" title="评论">
+  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h12a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H7l-3 3V5a1 1 0 0 1 1-1z"/></svg>
+</button>
