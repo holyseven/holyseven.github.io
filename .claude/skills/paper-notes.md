@@ -23,11 +23,23 @@ version: 2.0.0
 
 原始论文 HTML 和文本缓存在 `.paper-cache/{论文简称}/` 目录（已加入 .gitignore，不会被提交）。图片最终保存到 `assets/images/{论文简称}/`（会被提交和部署）。
 
-1. 如果论文来自 arXiv，**第一步用 `curl` 将完整 HTML 页面下载到本地文件**（如 `.paper-cache/{论文简称}/paper_raw.html`）。后续所有操作——文本提取、图片 URL 解析、figcaption 查找——都从这个本地文件进行，不再重复请求 arXiv。
+#### arXiv 论文（HTML 链接）
+
+1. **第一步用 `curl` 将完整 HTML 页面下载到本地文件**（如 `.paper-cache/{论文简称}/paper_raw.html`）。后续所有操作——文本提取、图片 URL 解析、figcaption 查找——都从这个本地文件进行，不再重复请求 arXiv。
 2. **不要使用 WebFetch 工具访问 arxiv.org**，该工具对 arxiv 域名有限制会报错。直接用 Bash 的 `curl` 命令。
 3. 从本地 HTML 中提取论文正文文本，保存为纯文本文件备用（如 `.paper-cache/{论文简称}/paper_full_text.txt`），作为后续写笔记的参考源。
 4. 从本地 HTML 中提取图片路径和 `<figcaption>` 信息，确认每张图片对应论文中的哪个 Figure。图片完整 URL 通常为 `https://arxiv.org/html/{arxiv_id}/figures/xxx.png` 或 `https://arxiv.org/html/{arxiv_id}/x{n}.png`，用 `curl` 下载到 `assets/images/{论文简称}/` 目录。
 5. 在笔记中用绝对路径引用图片：`![描述](/assets/images/{论文简称}/x1.png)`
+
+#### PDF 论文
+
+1. **用 Read 工具直接读取 PDF**（大文件用 `pages` 参数分批读取，如 `pages: "1-10"`）。Read 工具能同时看到文本和图片，无需额外提取文本步骤。
+2. **图片获取**，按优先级尝试：
+   - 优先检查论文是否有在线 HTML 版（通过 DOI 链接查找出版商页面），从 HTML 页面下载图片
+   - 否则用 `sips -s format png input.pdf --out page.png` 将含关键图的页面转为 PNG，用作博客图片
+   - 如需裁剪特定区域，可配合 `sips -c <height> <width> --cropOffset <y> <x>` 使用
+3. 将图片保存到 `assets/images/{论文简称}/` 目录，在笔记中用绝对路径引用
+4. **不要说"PDF 无法提取图片"**——总有办法获取图片，至少可以将页面转为 PNG
 
 ## 笔记内容要素
 
