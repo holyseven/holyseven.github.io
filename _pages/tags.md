@@ -1,16 +1,8 @@
 ---
-layout: default
-title: 首页
+layout: page
+title: 标签
+permalink: /tags/
 ---
-<!-- 首页：展示最近文章列表和简短介绍 -->
-<!-- TODO: 修改下方的欢迎语和自我介绍 -->
-
-<div class="home-intro">
-  <h1>你好，欢迎来到我的网站</h1>
-  <p>这里是我的个人博客，记录技术笔记与生活随想。</p>
-</div>
-
-<h2 class="section-title">最近文章</h2>
 
 <div class="tag-filter" id="tag-filter">
   <button class="tag-btn active" data-tag="all">全部</button>
@@ -25,18 +17,14 @@ title: 首页
   <button class="tag-btn" data-tag="bio">生物信息</button>
 </div>
 
-<ul class="post-list" id="post-list">
-  {% for post in site.posts %}
-  <li data-tags="{{ post.tags | join: ',' }}">
-    <a href="{{ post.url | relative_url }}">
-      <div class="post-list-title">{{ post.title }}</div>
-      <span class="post-list-meta">{{ post.date | date: "%Y-%m-%d" }}</span>
-      {% if post.excerpt %}
-      <p class="post-list-excerpt">{{ post.excerpt | strip_html | truncate: 100 }}</p>
-      {% endif %}
-    </a>
-  </li>
+{% assign sorted_tags = site.tags | sort %}
+{% for tag in sorted_tags %}
+<h3 id="tag-{{ tag[0] }}">{{ tag[0] }} <small>({{ tag[1].size }})</small></h3>
+<ul class="tag-post-list">
+  {% for post in tag[1] %}
+  <li data-tags="{{ post.tags | join: ',' }}"><a href="{{ post.url | relative_url }}">{{ post.title }}</a> <span class="post-list-meta">{{ post.date | date: "%Y-%m-%d" }}</span></li>
   {% endfor %}
 </ul>
+{% endfor %}
 
 <script src="{{ '/assets/js/tags.js' | relative_url }}"></script>
